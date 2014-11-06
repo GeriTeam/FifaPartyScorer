@@ -4,6 +4,7 @@ object dMain: TdMain
   Width = 215
   object DB: TDatabase
     AliasName = 'FIFADB'
+    Connected = True
     DatabaseName = 'db'
     LoginPrompt = False
     SessionName = 'Default'

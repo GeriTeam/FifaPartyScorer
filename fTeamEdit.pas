@@ -7,7 +7,7 @@ uses
   Dialogs, StdCtrls, Mask, DBCtrls, ADODB, DB, DBTables, JvBDEQuery, Buttons,
   JvExControls, JvDBLookup, ComCtrls, ExtCtrls, JvExExtCtrls, JvRadioGroup,
   JvExMask, JvToolEdit, JvDBLookupComboEdit, Grids, DBGrids, JvExDBGrids,
-  JvDBGrid, JvExStdCtrls, JvCombobox, JvDBSearchComboBox;
+  JvDBGrid, JvExStdCtrls, JvCombobox, JvDBSearchComboBox, JvDBCombobox, JvMemo;
 
 type
   TfmEditTeam = class(TForm)
@@ -54,7 +54,6 @@ type
     qryTournamentsSCHEME: TIntegerField;
     lcbTournament: TJvDBSearchComboBox;
     btnRefresh: TBitBtn;
-    btn1: TBitBtn;
     qryTournamentsGENERATED: TBooleanField;
     qryGames: TJvQuery;
     dsGames: TDataSource;
@@ -76,62 +75,68 @@ type
     qryGames_NAME_AWAY: TStringField;
     gdGames: TJvDBGrid;
     btn2: TBitBtn;
-    lbl1: TLabel;
-    lbl2: TLabel;
-    lcbTournamentGenerate: TJvDBLookupCombo;
-    procedure BitBtn1Click(Sender: TObject);
+    qryDataEdit_TOURNAMENT_NAME: TStringField;
+    pnl1: TPanel;
+    btn1: TBitBtn;
+    lcbTournamentGenerate: TJvDBSearchComboBox;
+    lcbFilterTournament: TJvDBSearchComboBox;
+    edt1: TEdit;
+    qry1: TADOQuery;
+    ds1: TADODataSet;
     procedure lcbTournamentChange(Sender: TObject);
     procedure PageControl1Change(Sender: TObject);
     procedure FormShow(Sender: TObject);
     procedure btn1Click(Sender: TObject);
-    procedure btn2Click(Sender: TObject);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
+    procedure lcbFilterTournamentChange(Sender: TObject);
+    procedure qryTeamsBeforeOpen(DataSet: TDataSet);
   private
     procedure CloseDataSets();
-    procedure SetTournamentGenerated();
-    function GetTournamentGenerated() : Boolean;
+    procedure SetTournamentGenerated(param :Integer);
+    function GetTournamentGenerated(param :Integer) : Boolean;
   public
     { Public declarations }
   end;
 
 var
   fmEditTeam: TfmEditTeam;
+  isFilter :Boolean;
 
 implementation
 
+uses dmMain;
+
 {$R *.dfm}
-
-procedure TfmEditTeam.BitBtn1Click(Sender: TObject);
-begin
-  qryPlayers.Open;
-  qryDataEdit.Edit;
-
-end;
 
 procedure TfmEditTeam.btn1Click(Sender: TObject);
 var
+ItemIndex :Integer;
 br :Integer;
 WinMessage : String;
 begin
+  qryGames.Close;
+  qryGames.ParamByName('_GAME_TOURNAMENT').Clear;
   br := 0;
-  qryTournaments.Open;
-  if lcbTournament.ItemIndex <> -1 then
-    if not GetTournamentGenerated() then
+  ItemIndex := lcbTournamentGenerate.ItemIndex + 1;
+  isFilter := False;
+    if not GetTournamentGenerated(ItemIndex) then
       begin
         qryDataEdit.Close;
-        qryDataEdit.ParamByName('_TEAM_TOURNAMENT').AsInteger :=
-          Integer(lcbTournamentGenerate.KeyValue);
+        qryDataEdit.ParamByName('_TEAM_TOURNAMENT').AsInteger := ItemIndex;
         qryDataEdit.Open;
         qryGames.Open;
-
+//        qryTournaments.Close;
+//        qryTournaments.ParamByName('_TR_ID').Clear;
+//        qryTournaments.Open;
 
         try
           while not qryDataEdit.Eof do
             begin
+              qryTeams.Close;
+              qryTeams.ParamByName('_TOURNAMENT').AsInteger := ItemIndex;
               qryTeams.ParamByName('_TMHOME').AsInteger :=
                 qryDataEditTEAMS_ID.AsInteger;
               qryTeams.Open;
-              lbl1.Caption := IntToStr(qryTeams.RecordCount);
               while not qryTeams.Eof do
                 begin
                   qryGames.Insert;
@@ -147,20 +152,14 @@ begin
             end;
         finally
           qryDataEdit.Close;
-          lbl1.Caption := lcbTournamentGenerate.Value;
-          SetTournamentGenerated;
+          SetTournamentGenerated(ItemIndex);
           WinMessage := 'Успещно са генерирани ' + IntToStr(br) + ' мача!';
           MessageDlg(WinMessage, mtInformation, mbOKCancel, 0);
         end;
       end
     else
       MessageDlg('Този турнир вече е генериран', mtError, mbOKCancel, 0);
-end;
-
-procedure TfmEditTeam.btn2Click(Sender: TObject);
-begin
-  qryGames.Close;
-  qryGames.Open;
+      edt1.Text := qryGames.SQL.Text;
 end;
 
 procedure TfmEditTeam.CloseDataSets;
@@ -184,25 +183,51 @@ begin
     qryTournaments.Open;
 
   if PageControl1.ActivePage = tb3 then
+    qryTournaments.Open;
+end;
+
+function TfmEditTeam.GetTournamentGenerated(param :Integer): Boolean;
+begin
+
+  qryTournaments.Close;
+    qryTournaments.ParamByName('_TR_ID').AsInteger :=
+      param;
+    qryTournaments.Open;
+  if qryTournamentsGENERATED.AsBoolean = True then
     begin
-       qryTournaments.Open;
-       qryDataEdit.Open;
+      qryTournaments.Close;
+      qryTournaments.ParamByName('_TR_ID').Clear;
+      qryTournaments.Open;
+      lcbTournamentGenerate.ItemIndex := param - 1;
+      Result := True
+    end
+  else
+    begin
+      qryTournaments.Close;
+      qryTournaments.ParamByName('_TR_ID').Clear;
+      qryTournaments.Open;
+      lcbTournamentGenerate.ItemIndex := param - 1;
+      Result := False;
     end;
-
-
 
 end;
 
-function TfmEditTeam.GetTournamentGenerated(): Boolean;
+procedure TfmEditTeam.lcbFilterTournamentChange(Sender: TObject);
 begin
-  qryTournaments.Close;
-    qryTournaments.ParamByName('_TR_ID').AsInteger :=
-  Integer(lcbTournamentGenerate.KeyValue);
-    qryTournaments.Open;
-  if qryTournamentsGENERATED.AsBoolean = True then
-    Result := True
-  else
-    Result := False;
+
+  try
+    isFilter := True;
+    qryGames.Close;
+    qryTeams.Close;
+    qryGames.ParamByName('_GAME_TOURNAMENT').AsInteger := lcbFilterTournament.ItemIndex + 1;
+    qryTeams.ParamByName('_TOURNAMENT').AsInteger := lcbFilterTournament.ItemIndex + 1;
+  finally
+    qryTeams.Open;
+    qryGames.Open;
+    edt1.Text := qryGames.SQL.Text;
+  end;
+
+
 end;
 
 procedure TfmEditTeam.lcbTournamentChange(Sender: TObject);
@@ -210,7 +235,7 @@ begin
   if lcbTournament.ItemIndex <> -1 then
     begin
       qryKlasirane.Close;
-      qryKlasirane.ParamByName('TOURNAMENT').AsInteger := Integer(lcbTournamentGenerate.KeyValue);
+      qryKlasirane.ParamByName('TOURNAMENT').AsInteger := lcbTournamentGenerate.ItemIndex + 1;
       qryKlasirane.Open;
     end;
 
@@ -222,11 +247,17 @@ begin
     qryTournaments.Open;
 end;
 
-procedure TfmEditTeam.SetTournamentGenerated;
+procedure TfmEditTeam.qryTeamsBeforeOpen(DataSet: TDataSet);
+begin
+  if isFilter then
+    qryTeams.ParamByName('_TMHOME').Clear;
+end;
+
+procedure TfmEditTeam.SetTournamentGenerated(param :Integer);
 begin
   qryTournaments.Close;
   qryTournaments.ParamByName('_TR_ID').AsInteger :=
-    Integer(lcbTournamentGenerate.KeyValue);
+    param;
   qryTournaments.Open;
   qryTournaments.Edit;
   qryTournamentsGENERATED.AsBoolean := True;

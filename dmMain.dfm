@@ -2,7 +2,20 @@ object dMain: TdMain
   OldCreateOrder = False
   Height = 150
   Width = 215
-  object DB: TDatabase
+  object fifaCon: TADOConnection
+    Connected = True
+    ConnectionString = 
+      'Provider=Microsoft.Jet.OLEDB.4.0;Data Source=D:\FIfaFriendlyScor' +
+      'er\FifaPartyScorer\DB\FIFAPARTYDB.mdb;Persist Security Info=Fals' +
+      'e'
+    LoginPrompt = False
+    Mode = cmShareDenyNone
+    Provider = 'Microsoft.Jet.OLEDB.4.0'
+    BeforeConnect = fifaConBeforeConnect
+    Left = 16
+    Top = 56
+  end
+  object dbCon: TDatabase
     AliasName = 'FIFADB'
     Connected = True
     DatabaseName = 'db'
@@ -10,13 +23,5 @@ object dMain: TdMain
     SessionName = 'Default'
     Left = 16
     Top = 8
-  end
-  object fifaCon: TADOConnection
-    ConnectionString = 
-      'Provider=MSDASQL.1;Password="";Persist Security Info=True;Data S' +
-      'ource=FIFADB'
-    Provider = 'MSDASQL.1'
-    Left = 16
-    Top = 56
   end
 end

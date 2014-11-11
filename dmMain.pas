@@ -52,15 +52,19 @@ begin
 end;
 
 procedure TdMain.fifaConBeforeConnect(Sender: TObject);
+
 begin
-    AddDSN('FIFADB', ExtractFileDir(Application.ExeName) +
-    '\FIFAPARTYDB.mdb', 'nanan');
 
-    vsConString := 'Provider=Microsoft.Jet.OLEDB.4.0;Data Source=' +
-    ExtractFileDir(Application.ExeName) +
-    '\FIFAPARTYDB.mdb;Persist Security Info=False';
+//    AddDSN('FIFADB', ExtractFileDir(Application.ExeName) +
+//    '\FIFAPARTYDB.mdb', 'nanan');
 
-  fifaCon.ConnectionString := vsConString;
+//    vsConString := 'Provider=Microsoft.Jet.OLEDB.4.0;Data Source=' +
+//    ExtractFileDir(Application.ExeName) +
+//    '\FIFAPARTYDB.mdb;Persist Security Info=False';
+
+//  fifaCon.ConnectionString := vsConString;
+
+
 end;
 
 end.

@@ -11,7 +11,6 @@ uses
 
 type
   TfmEditTeam = class(TForm)
-    PageControl1: TPageControl;
     tb1: TTabSheet;
     qryDataEdit: TJvQuery;
     qryDataEditTEAMS_ID: TIntegerField;
@@ -20,15 +19,13 @@ type
     qryDataEditTEAM_POINTS: TIntegerField;
     qryDataEditTEAM_MACHES: TIntegerField;
     dsDataEdit: TDataSource;
-    TabSheet2: TTabSheet;
+    tb2: TTabSheet;
     tb3: TTabSheet;
-    BitBtn2: TBitBtn;
     grpAddTeam: TGroupBox;
-    DBEdit1: TDBEdit;
     BitBtn3: TBitBtn;
     Label1: TLabel;
     Label2: TLabel;
-    JvDBLookupCombo1: TJvDBLookupCombo;
+    edtPlayer: TJvDBLookupCombo;
     rgTeam: TJvRadioGroup;
     cbRealTeam: TJvDBLookupCombo;
     lblAddTeam: TLabel;
@@ -80,16 +77,30 @@ type
     btn1: TBitBtn;
     lcbTournamentGenerate: TJvDBSearchComboBox;
     lcbFilterTournament: TJvDBSearchComboBox;
-    edt1: TEdit;
-    qry1: TADOQuery;
-    ds1: TADODataSet;
+    grdTeams: TJvDBGrid;
+    lcbTeamsAddFilter: TJvDBSearchComboBox;
+    pgc1: TPageControl;
+    lcbInsertTeam: TJvDBSearchComboBox;
+    qryTeamsAdd: TJvQuery;
+    IntegerField1: TIntegerField;
+    StringField1: TStringField;
+    IntegerField2: TIntegerField;
+    IntegerField3: TIntegerField;
+    IntegerField4: TIntegerField;
+    IntegerField5: TIntegerField;
+    dsTeamsAdd: TDataSource;
+    grp1: TGroupBox;
+    edtTEAM_NAME: TEdit;
     procedure lcbTournamentChange(Sender: TObject);
-    procedure PageControl1Change(Sender: TObject);
+    procedure pgctb2Change(Sender: TObject);
     procedure FormShow(Sender: TObject);
     procedure btn1Click(Sender: TObject);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure lcbFilterTournamentChange(Sender: TObject);
     procedure qryTeamsBeforeOpen(DataSet: TDataSet);
+    procedure lcbTeamsAddFilterChange(Sender: TObject);
+    procedure BitBtn3Click(Sender: TObject);
+    procedure rgTeamClick(Sender: TObject);
   private
     procedure CloseDataSets();
     procedure SetTournamentGenerated(param :Integer);
@@ -107,6 +118,20 @@ implementation
 uses dmMain;
 
 {$R *.dfm}
+
+procedure TfmEditTeam.BitBtn3Click(Sender: TObject);
+begin
+  try
+    qryDataEdit.Insert;
+    qryDataEditTEAM_NAME.AsString := edtTEAM_NAME.Text;
+    qryDataEditTEAM_TOURNAMENT.AsInteger := lcbInsertTeam.ItemIndex + 1;
+    qryDataEdit.Post;
+  finally
+    qryDataEdit.Close;
+    qryDataEdit.Open;
+  end;
+
+end;
 
 procedure TfmEditTeam.btn1Click(Sender: TObject);
 var
@@ -159,7 +184,6 @@ begin
       end
     else
       MessageDlg('Този турнир вече е генериран', mtError, mbOKCancel, 0);
-      edt1.Text := qryGames.SQL.Text;
 end;
 
 procedure TfmEditTeam.CloseDataSets;
@@ -168,6 +192,8 @@ begin
   qryTournaments.Close;
   qryDataEdit.Close;
   qryPlayers.Close;
+  qryGames.Close;
+  qryTeams.Close;
 end;
 
 procedure TfmEditTeam.FormClose(Sender: TObject; var Action: TCloseAction);
@@ -179,10 +205,13 @@ procedure TfmEditTeam.FormShow(Sender: TObject);
 begin
   CloseDataSets;
 
-  if PageControl1.ActivePage = tb1 then
+  if pgc1.ActivePage = tb1 then
     qryTournaments.Open;
 
-  if PageControl1.ActivePage = tb3 then
+  if pgc1.ActivePage = tb2 then
+    qryTournaments.Open;
+
+  if pgc1.ActivePage = tb3 then
     qryTournaments.Open;
 end;
 
@@ -224,10 +253,22 @@ begin
   finally
     qryTeams.Open;
     qryGames.Open;
-    edt1.Text := qryGames.SQL.Text;
   end;
 
 
+end;
+
+procedure TfmEditTeam.lcbTeamsAddFilterChange(Sender: TObject);
+begin
+  try
+    isFilter := True;
+    qryDataEdit.Close;
+    qryPlayers.Close;
+    qryDataEdit.ParamByName('_TEAM_TOURNAMENT').AsInteger := lcbFilterTournament.ItemIndex + 1;
+  finally
+    qryDataEdit.Open;
+    qryPlayers.Open;
+  end;
 end;
 
 procedure TfmEditTeam.lcbTournamentChange(Sender: TObject);
@@ -241,9 +282,17 @@ begin
 
 end;
 
-procedure TfmEditTeam.PageControl1Change(Sender: TObject);
+procedure TfmEditTeam.pgctb2Change(Sender: TObject);
 begin
-  if PageControl1.ActivePage = tb1 then
+  CloseDataSets;
+
+  if pgc1.ActivePage = tb1 then
+    qryTournaments.Open;
+
+  if pgc1.ActivePage = tb2 then
+    qryTournaments.Open;
+
+  if pgc1.ActivePage = tb3 then
     qryTournaments.Open;
 end;
 
@@ -251,6 +300,14 @@ procedure TfmEditTeam.qryTeamsBeforeOpen(DataSet: TDataSet);
 begin
   if isFilter then
     qryTeams.ParamByName('_TMHOME').Clear;
+end;
+
+procedure TfmEditTeam.rgTeamClick(Sender: TObject);
+begin
+  if rgTeam.ItemIndex = 0 then
+    cbRealTeam.Enabled := False
+  else
+    cbRealTeam.Enabled := True;
 end;
 
 procedure TfmEditTeam.SetTournamentGenerated(param :Integer);

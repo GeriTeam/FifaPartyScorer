@@ -1,9 +1,9 @@
 object fmEditTeam: TfmEditTeam
   Left = 0
   Top = 0
-  Caption = 'fmEditTeam'
-  ClientHeight = 367
-  ClientWidth = 830
+  Caption = 'FIFA Party Scorer'
+  ClientHeight = 321
+  ClientWidth = 577
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -15,14 +15,14 @@ object fmEditTeam: TfmEditTeam
   OnShow = FormShow
   PixelsPerInch = 96
   TextHeight = 13
-  object PageControl1: TPageControl
+  object pgc1: TPageControl
     Left = 8
     Top = 8
-    Width = 817
+    Width = 561
     Height = 305
-    ActivePage = tb1
+    ActivePage = tb2
     TabOrder = 0
-    OnChange = PageControl1Change
+    OnChange = pgctb2Change
     object tb1: TTabSheet
       Caption = #1050#1083#1072#1089#1080#1088#1072#1085#1077
       object JvDBGrid1: TJvDBGrid
@@ -45,20 +45,15 @@ object fmEditTeam: TfmEditTeam
         TitleRowHeight = 17
         Columns = <
           item
+            Color = clYellow
             Expanded = False
             FieldName = 'TEAM_NAME'
             Title.Caption = #1054#1090#1073#1086#1088
-            Width = 231
+            Width = 315
             Visible = True
           end
           item
-            Expanded = False
-            FieldName = 'TEAM_TOURNAMENT'
-            Title.Caption = #1058#1091#1088#1085#1080#1088
-            Width = 49
-            Visible = True
-          end
-          item
+            Color = clAqua
             Expanded = False
             FieldName = 'TEAM_POINTS'
             Title.Caption = #1058#1086#1095#1082#1080
@@ -66,6 +61,7 @@ object fmEditTeam: TfmEditTeam
             Visible = True
           end
           item
+            Color = clYellow
             Expanded = False
             FieldName = 'TEAM_MACHES'
             Title.Caption = #1052#1072#1095#1086#1074#1077
@@ -73,10 +69,11 @@ object fmEditTeam: TfmEditTeam
             Visible = True
           end
           item
+            Color = 10930928
             Expanded = False
             FieldName = 'TEAM_Player'
             Title.Caption = #1048#1075#1088#1072#1095
-            Width = 105
+            Width = 95
             Visible = True
           end>
       end
@@ -101,18 +98,18 @@ object fmEditTeam: TfmEditTeam
         OnClick = lcbTournamentChange
       end
     end
-    object TabSheet2: TTabSheet
+    object tb2: TTabSheet
       Caption = #1054#1090#1073#1086#1088#1080
       ImageIndex = 1
       object grpAddTeam: TGroupBox
-        Left = 544
-        Top = 16
+        Left = 293
+        Top = 3
         Width = 257
-        Height = 209
+        Height = 198
         Caption = ' '#1044#1086#1073#1072#1074#1080' '#1054#1090#1073#1086#1088' '
         TabOrder = 0
         object Label1: TLabel
-          Left = 19
+          Left = 13
           Top = 16
           Width = 77
           Height = 13
@@ -121,9 +118,9 @@ object fmEditTeam: TfmEditTeam
         object Label2: TLabel
           Left = 146
           Top = 18
-          Width = 73
+          Width = 34
           Height = 13
-          Caption = #1056#1077#1072#1083#1077#1085' '#1048#1075#1088#1072#1095':'
+          Caption = #1048#1075#1088#1072#1095':'
         end
         object lblAddTeam: TLabel
           Left = 11
@@ -132,31 +129,23 @@ object fmEditTeam: TfmEditTeam
           Height = 13
           Caption = #1058#1091#1088#1085#1080#1088
         end
-        object DBEdit1: TDBEdit
-          Left = 11
-          Top = 32
-          Width = 121
-          Height = 21
-          DataField = 'TEAM_NAME'
-          DataSource = dsDataEdit
-          TabOrder = 0
-        end
         object BitBtn3: TBitBtn
-          Left = 174
-          Top = 171
+          Left = 179
+          Top = 155
           Width = 75
           Height = 25
           Caption = #1044#1086#1073#1072#1074#1080
-          TabOrder = 1
+          TabOrder = 0
+          OnClick = BitBtn3Click
         end
-        object JvDBLookupCombo1: TJvDBLookupCombo
+        object edtPlayer: TJvDBLookupCombo
           Left = 146
           Top = 32
           Width = 102
           Height = 21
           DataField = '_PLAYER_NAME'
           DataSource = dsDataEdit
-          TabOrder = 2
+          TabOrder = 1
         end
         object rgTeam: TJvRadioGroup
           Left = 11
@@ -165,10 +154,12 @@ object fmEditTeam: TfmEditTeam
           Height = 48
           Caption = '  '#1056#1077#1072#1083#1077#1085' '#1086#1090#1073#1086#1088' '#1074' '#1080#1075#1088#1072#1090#1072'  '
           Columns = 2
+          ItemIndex = 0
           Items.Strings = (
             #1055#1088#1077#1076#1080' '#1074#1089#1077#1082#1080' '#1084#1072#1095
             #1058#1074#1098#1088#1076' '#1086#1090#1073#1086#1088)
-          TabOrder = 3
+          TabOrder = 2
+          OnClick = rgTeamClick
           CaptionVisible = True
         end
         object cbRealTeam: TJvDBLookupCombo
@@ -176,8 +167,88 @@ object fmEditTeam: TfmEditTeam
           Top = 113
           Width = 145
           Height = 21
-          TabOrder = 4
+          Enabled = False
+          TabOrder = 3
         end
+        object lcbInsertTeam: TJvDBSearchComboBox
+          Left = 11
+          Top = 155
+          Width = 145
+          Height = 21
+          DataField = 'NAME'
+          DataSource = dsTournaments
+          TabOrder = 4
+          OnChange = lcbTeamsAddFilterChange
+        end
+        object edtTEAM_NAME: TEdit
+          Left = 13
+          Top = 32
+          Width = 121
+          Height = 21
+          TabOrder = 5
+        end
+      end
+      object grdTeams: TJvDBGrid
+        Left = 3
+        Top = 30
+        Width = 284
+        Height = 241
+        DataSource = dsDataEdit
+        TabOrder = 1
+        TitleFont.Charset = DEFAULT_CHARSET
+        TitleFont.Color = clWindowText
+        TitleFont.Height = -11
+        TitleFont.Name = 'Tahoma'
+        TitleFont.Style = []
+        SelectColumnsDialogStrings.Caption = 'Select columns'
+        SelectColumnsDialogStrings.OK = '&OK'
+        SelectColumnsDialogStrings.NoSelectionWarning = 'At least one column must be visible!'
+        EditControls = <>
+        RowsHeight = 17
+        TitleRowHeight = 17
+        Columns = <
+          item
+            Color = clYellow
+            Expanded = False
+            FieldName = 'TEAM_NAME'
+            Title.Caption = #1048#1084#1077' '#1086#1090#1073#1086#1088
+            Width = 104
+            Visible = True
+          end
+          item
+            Color = clMoneyGreen
+            Expanded = False
+            FieldName = '_TOURNAMENT_NAME'
+            Title.Caption = #1058#1091#1088#1085#1080#1088
+            Width = 85
+            Visible = True
+          end
+          item
+            Color = 16776176
+            Expanded = False
+            FieldName = '_PLAYER_NAME'
+            Title.Caption = #1048#1075#1088#1072#1095
+            Width = 57
+            Visible = True
+          end>
+      end
+      object lcbTeamsAddFilter: TJvDBSearchComboBox
+        Left = 3
+        Top = 3
+        Width = 284
+        Height = 21
+        DataField = 'NAME'
+        DataSource = dsTournaments
+        TabOrder = 2
+        OnChange = lcbTeamsAddFilterChange
+      end
+      object grp1: TGroupBox
+        Left = 293
+        Top = 207
+        Width = 257
+        Height = 64
+        Caption = #1044#1086#1073#1072#1074#1103#1085#1077' '#1085#1072' '#1090#1091#1088#1085#1080#1088
+        TabOrder = 3
       end
     end
     object tb3: TTabSheet
@@ -270,10 +341,11 @@ object fmEditTeam: TfmEditTeam
         OnClick = lcbFilterTournamentChange
       end
       object pnl1: TPanel
-        Left = 573
-        Top = 11
-        Width = 233
-        Height = 113
+        Left = 319
+        Top = 3
+        Width = 218
+        Height = 86
+        BorderStyle = bsSingle
         TabOrder = 2
         object btn1: TBitBtn
           Left = 16
@@ -304,23 +376,7 @@ object fmEditTeam: TfmEditTeam
         TabOrder = 3
         OnChange = lcbFilterTournamentChange
       end
-      object edt1: TEdit
-        Left = 432
-        Top = 88
-        Width = 121
-        Height = 21
-        TabOrder = 4
-        Text = 'edt1'
-      end
     end
-  end
-  object BitBtn2: TBitBtn
-    Left = 8
-    Top = 334
-    Width = 75
-    Height = 25
-    Caption = 'Save'
-    TabOrder = 1
   end
   object qryDataEdit: TJvQuery
     DatabaseName = 'db'
@@ -341,8 +397,8 @@ object fmEditTeam: TfmEditTeam
       '  (:_TEAM_TOURNAMENT is null) or'
       '   ( TEAM_TOURNAMENT = :_TEAM_TOURNAMENT) ')
     Macros = <>
-    Left = 200
-    Top = 272
+    Left = 104
+    Top = 104
     ParamData = <
       item
         DataType = ftInteger
@@ -402,8 +458,8 @@ object fmEditTeam: TfmEditTeam
   end
   object dsDataEdit: TDataSource
     DataSet = qryDataEdit
-    Left = 200
-    Top = 312
+    Left = 104
+    Top = 120
   end
   object qryPlayers: TJvQuery
     DatabaseName = 'db'
@@ -414,8 +470,8 @@ object fmEditTeam: TfmEditTeam
       'from '
       'PLAYERS')
     Macros = <>
-    Left = 256
-    Top = 272
+    Left = 168
+    Top = 104
     object qryPlayersID: TIntegerField
       FieldName = 'ID'
       Origin = 'DB.PLAYERS.ID'
@@ -428,8 +484,8 @@ object fmEditTeam: TfmEditTeam
   end
   object dsPlayers: TDataSource
     DataSet = qryPlayers
-    Left = 256
-    Top = 312
+    Left = 168
+    Top = 128
   end
   object qryKlasirane: TJvQuery
     DatabaseName = 'db'
@@ -447,8 +503,8 @@ object fmEditTeam: TfmEditTeam
       'order by'
       'TEAM_POINTS')
     Macros = <>
-    Left = 304
-    Top = 272
+    Left = 224
+    Top = 104
     ParamData = <
       item
         DataType = ftInteger
@@ -483,8 +539,8 @@ object fmEditTeam: TfmEditTeam
   end
   object dsKlasirane: TDataSource
     DataSet = qryKlasirane
-    Left = 312
-    Top = 312
+    Left = 232
+    Top = 144
   end
   object qryTournaments: TJvQuery
     DatabaseName = 'db'
@@ -505,8 +561,8 @@ object fmEditTeam: TfmEditTeam
       'order by'
       'ID')
     Macros = <>
-    Left = 360
-    Top = 272
+    Left = 280
+    Top = 104
     ParamData = <
       item
         DataType = ftInteger
@@ -538,8 +594,8 @@ object fmEditTeam: TfmEditTeam
   end
   object dsTournaments: TDataSource
     DataSet = qryTournaments
-    Left = 368
-    Top = 312
+    Left = 280
+    Top = 152
   end
   object qryGames: TJvQuery
     DatabaseName = 'db'
@@ -555,8 +611,8 @@ object fmEditTeam: TfmEditTeam
       '  (:_GAME_TOURNAMENT is null) or'
       '   ( TOURNAMENT = :_GAME_TOURNAMENT) ')
     Macros = <>
-    Left = 416
-    Top = 272
+    Left = 288
+    Top = 192
     ParamData = <
       item
         DataType = ftInteger
@@ -616,8 +672,8 @@ object fmEditTeam: TfmEditTeam
   object dsGames: TDataSource
     AutoEdit = False
     DataSet = qryGames
-    Left = 416
-    Top = 312
+    Left = 296
+    Top = 232
   end
   object qryTeams: TJvQuery
     BeforeOpen = qryTeamsBeforeOpen
@@ -636,8 +692,8 @@ object fmEditTeam: TfmEditTeam
       ' ( TEAM_TOURNAMENT = :_TOURNAMENT) '
       '')
     Macros = <>
-    Left = 472
-    Top = 272
+    Left = 184
+    Top = 184
     ParamData = <
       item
         DataType = ftInteger
@@ -682,28 +738,12 @@ object fmEditTeam: TfmEditTeam
   end
   object dsTeams: TDataSource
     DataSet = qryTeams
-    Left = 472
-    Top = 312
+    Left = 184
+    Top = 224
   end
-  object qry1: TADOQuery
-    Connection = dMain.fifaCon
-    Parameters = <
-      item
-        Name = '?'
-        Attributes = [paNullable]
-        DataType = ftInteger
-        NumericScale = 255
-        Precision = 255
-        Size = 510
-      end
-      item
-        Name = '?'
-        Attributes = [paNullable]
-        DataType = ftInteger
-        NumericScale = 255
-        Precision = 255
-        Size = 510
-      end>
+  object qryTeamsAdd: TJvQuery
+    DatabaseName = 'db'
+    RequestLive = True
     SQL.Strings = (
       'select'
       'TEAM_TOURNAMENT,'
@@ -715,17 +755,39 @@ object fmEditTeam: TfmEditTeam
       ''
       'from '
       'TEAMS'
-      ''
-      'where'
-      '  (:_TEAM_TOURNAMENT is null) or'
-      '   ( TEAM_TOURNAMENT = :_TEAM_TOURNAMENT) ')
-    Left = 128
-    Top = 80
+      '')
+    Macros = <>
+    Left = 24
+    Top = 104
+    object IntegerField1: TIntegerField
+      FieldName = 'TEAMS_ID'
+      Origin = 'DB.TEAMS.TEAMS_ID'
+    end
+    object StringField1: TStringField
+      FieldName = 'TEAM_NAME'
+      Origin = 'DB.TEAMS.TEAM_NAME'
+      Size = 255
+    end
+    object IntegerField2: TIntegerField
+      FieldName = 'TEAM_TOURNAMENT'
+      Origin = 'DB.TEAMS.TEAM_TOURNAMENT'
+    end
+    object IntegerField3: TIntegerField
+      FieldName = 'TEAM_POINTS'
+      Origin = 'DB.TEAMS.TEAM_POINTS'
+    end
+    object IntegerField4: TIntegerField
+      FieldName = 'TEAM_MACHES'
+      Origin = 'DB.TEAMS.TEAM_MACHES'
+    end
+    object IntegerField5: TIntegerField
+      FieldName = 'TEAM_Player'
+      Origin = 'DB.TEAMS.TEAM_Player'
+    end
   end
-  object ds1: TADODataSet
-    Connection = dMain.fifaCon
-    Parameters = <>
-    Left = 128
-    Top = 128
+  object dsTeamsAdd: TDataSource
+    DataSet = qryTeamsAdd
+    Left = 24
+    Top = 112
   end
 end

@@ -27,7 +27,6 @@ type
     Label2: TLabel;
     edtPlayer: TJvDBLookupCombo;
     rgTeam: TJvRadioGroup;
-    cbRealTeam: TJvDBLookupCombo;
     lblAddTeam: TLabel;
     qryPlayers: TJvQuery;
     dsPlayers: TDataSource;
@@ -91,6 +90,16 @@ type
     dsTeamsAdd: TDataSource;
     grp1: TGroupBox;
     edtTEAM_NAME: TEdit;
+    qryKlasirane_Player_Name: TStringField;
+    edtAddTournament: TEdit;
+    btn3: TBitBtn;
+    lbl1: TLabel;
+    qryFIFATeams: TJvQuery;
+    dsFIFATeams: TDataSource;
+    qryFIFATeamsID: TIntegerField;
+    qryFIFATeamsNAME: TStringField;
+    qryDataEditFIFA_TEAM: TIntegerField;
+    cbRealTeam: TJvDBSearchComboBox;
     procedure lcbTournamentChange(Sender: TObject);
     procedure pgctb2Change(Sender: TObject);
     procedure FormShow(Sender: TObject);
@@ -101,6 +110,7 @@ type
     procedure lcbTeamsAddFilterChange(Sender: TObject);
     procedure BitBtn3Click(Sender: TObject);
     procedure rgTeamClick(Sender: TObject);
+    procedure btn3Click(Sender: TObject);
   private
     procedure CloseDataSets();
     procedure SetTournamentGenerated(param :Integer);
@@ -125,6 +135,12 @@ begin
     qryDataEdit.Insert;
     qryDataEditTEAM_NAME.AsString := edtTEAM_NAME.Text;
     qryDataEditTEAM_TOURNAMENT.AsInteger := lcbInsertTeam.ItemIndex + 1;
+
+    if rgTeam.ItemIndex = 1 then
+      qryDataEditFIFA_TEAM.AsInteger := cbRealTeam.ItemIndex + 1
+    else
+      qryDataEditFIFA_TEAM.AsInteger := 632;
+
     qryDataEdit.Post;
   finally
     qryDataEdit.Close;
@@ -184,6 +200,13 @@ begin
       end
     else
       MessageDlg('Този турнир вече е генериран', mtError, mbOKCancel, 0);
+end;
+
+procedure TfmEditTeam.btn3Click(Sender: TObject);
+begin
+  qryTournaments.Insert;
+  qryTournamentsNAME.AsString := edtAddTournament.Text;
+  qryTournamentsGENERATED.AsBoolean := False;
 end;
 
 procedure TfmEditTeam.CloseDataSets;
@@ -275,8 +298,10 @@ procedure TfmEditTeam.lcbTournamentChange(Sender: TObject);
 begin
   if lcbTournament.ItemIndex <> -1 then
     begin
+      qryPlayers.Close;
       qryKlasirane.Close;
       qryKlasirane.ParamByName('TOURNAMENT').AsInteger := lcbTournamentGenerate.ItemIndex + 1;
+      qryPlayers.Open;
       qryKlasirane.Open;
     end;
 
@@ -305,9 +330,15 @@ end;
 procedure TfmEditTeam.rgTeamClick(Sender: TObject);
 begin
   if rgTeam.ItemIndex = 0 then
-    cbRealTeam.Enabled := False
+    begin
+      cbRealTeam.Enabled := False;
+      qryFIFATeams.Close
+    end
   else
+  begin
+    qryFIFATeams.Open;
     cbRealTeam.Enabled := True;
+  end;
 end;
 
 procedure TfmEditTeam.SetTournamentGenerated(param :Integer);

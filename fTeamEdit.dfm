@@ -91,7 +91,6 @@ object fmEditTeam: TfmEditTeam
         DataField = 'NAME'
         DataSource = dsTournaments
         TabOrder = 1
-        Text = #1055#1098#1088#1074#1077#1085#1089#1090#1074#1086
         OnChange = lcbTournamentChange
       end
       object btnRefresh: TBitBtn
@@ -176,8 +175,6 @@ object fmEditTeam: TfmEditTeam
           DataField = 'NAME'
           DataSource = dsTournaments
           TabOrder = 3
-          Text = #1055#1098#1088#1074#1077#1085#1089#1090#1074#1086
-          OnChange = lcbTeamsAddFilterChange
         end
         object edtTEAM_NAME: TEdit
           Left = 13
@@ -196,7 +193,6 @@ object fmEditTeam: TfmEditTeam
           Enabled = False
           TabOrder = 5
           Text = '<'#1085#1103#1084#1072'>'
-          OnChange = lcbTeamsAddFilterChange
         end
       end
       object grdTeams: TJvDBGrid
@@ -205,12 +201,14 @@ object fmEditTeam: TfmEditTeam
         Width = 284
         Height = 241
         DataSource = dsDataEdit
+        ImeMode = imClose
         TabOrder = 1
         TitleFont.Charset = DEFAULT_CHARSET
         TitleFont.Color = clWindowText
         TitleFont.Height = -11
         TitleFont.Name = 'Tahoma'
         TitleFont.Style = []
+        AutoAppend = False
         SelectColumnsDialogStrings.Caption = 'Select columns'
         SelectColumnsDialogStrings.OK = '&OK'
         SelectColumnsDialogStrings.NoSelectionWarning = 'At least one column must be visible!'
@@ -251,7 +249,6 @@ object fmEditTeam: TfmEditTeam
         DataField = 'NAME'
         DataSource = dsTournaments
         TabOrder = 2
-        Text = #1055#1098#1088#1074#1077#1085#1089#1090#1074#1086
         OnChange = lcbTeamsAddFilterChange
       end
       object grp1: TGroupBox
@@ -410,14 +407,6 @@ object fmEditTeam: TfmEditTeam
         TabOrder = 3
         Text = #1055#1098#1088#1074#1077#1085#1089#1090#1074#1086
         OnChange = lcbFilterTournamentChange
-      end
-      object edt1: TEdit
-        Left = 376
-        Top = 136
-        Width = 121
-        Height = 21
-        TabOrder = 4
-        Text = 'edt1'
       end
     end
   end

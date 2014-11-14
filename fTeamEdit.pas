@@ -7,7 +7,8 @@ uses
   Dialogs, StdCtrls, Mask, DBCtrls, ADODB, DB, DBTables, JvBDEQuery, Buttons,
   JvExControls, JvDBLookup, ComCtrls, ExtCtrls, JvExExtCtrls, JvRadioGroup,
   JvExMask, JvToolEdit, JvDBLookupComboEdit, Grids, DBGrids, JvExDBGrids,
-  JvDBGrid, JvExStdCtrls, JvCombobox, JvDBSearchComboBox, JvDBCombobox, JvMemo;
+  JvDBGrid, JvExStdCtrls, JvCombobox, JvDBSearchComboBox, JvDBCombobox, JvMemo,
+  dblookup;
 
 type
   TfmEditTeam = class(TForm)
@@ -102,7 +103,6 @@ type
     qryDataEdit_PLAYER_NAME: TStringField;
     qryGames_NAME_HOME: TStringField;
     qryGames_AWAY_TEAM: TStringField;
-    edt1: TEdit;
     procedure lcbTournamentChange(Sender: TObject);
     procedure pgctb2Change(Sender: TObject);
     procedure FormShow(Sender: TObject);
@@ -173,7 +173,6 @@ begin
 //        qryTournaments.Close;
 //        qryTournaments.ParamByName('_TR_ID').Clear;
 //        qryTournaments.Open;
-          edt1.Text:= IntToStr(qryDataEdit.RecordCount);
         try
           while not qryDataEdit.Eof do
             begin
@@ -186,7 +185,6 @@ begin
                   qryGames.Insert;
                   qryGamesPLAYER_HOME.AsInteger := qryDataEditTEAMS_ID.AsInteger;
                   qryGamesPLAYER_AWAY.AsInteger := qryTeamsTEAMS_ID.AsInteger;
-                  //Тук нз дали е правилно било е  qryDataEdit.ParamByName('_TEAM_TOURNAMENT').AsInteger
                   qryGamesTOURNAMENT.AsInteger := CurrentTournament;
                   qryGames.Post;
                   qryTeams.Next;
@@ -211,6 +209,8 @@ begin
   qryTournaments.Insert;
   qryTournamentsNAME.AsString := edtAddTournament.Text;
   qryTournamentsGENERATED.AsBoolean := False;
+  qryTournaments.Post;
+  MessageDlg('Успешно създаден Турнир ''' + edtAddTournament.Text + '''', mtInformation, mbOKCancel, 0 );
 end;
 
 procedure TfmEditTeam.CloseDataSets;
@@ -295,6 +295,7 @@ begin
   finally
     qryDataEdit.Open;
     qryPlayers.Open;
+
   end;
 end;
 

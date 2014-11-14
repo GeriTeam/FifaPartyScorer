@@ -101,6 +101,8 @@ type
     qryDataEdit_TOURNAMENT_NAME: TStringField;
     qryDataEdit_PLAYER_NAME: TStringField;
     qryGames_NAME_HOME: TStringField;
+    qryGames_AWAY_TEAM: TStringField;
+    edt1: TEdit;
     procedure lcbTournamentChange(Sender: TObject);
     procedure pgctb2Change(Sender: TObject);
     procedure FormShow(Sender: TObject);
@@ -152,7 +154,7 @@ end;
 
 procedure TfmEditTeam.btn1Click(Sender: TObject);
 var
-ItemIndex :Integer;
+ItemIndex,CurrentTournament :Integer;
 br :Integer;
 WinMessage : String;
 begin
@@ -165,12 +167,13 @@ begin
       begin
         qryDataEdit.Close;
         SetParamsAdo(qryDataEdit,'_TEAM_TOURNAMENT', ItemIndex);
+        CurrentTournament := ItemIndex;
         qryDataEdit.Open;
         qryGames.Open;
 //        qryTournaments.Close;
 //        qryTournaments.ParamByName('_TR_ID').Clear;
 //        qryTournaments.Open;
-
+          edt1.Text:= IntToStr(qryDataEdit.RecordCount);
         try
           while not qryDataEdit.Eof do
             begin
@@ -184,7 +187,7 @@ begin
                   qryGamesPLAYER_HOME.AsInteger := qryDataEditTEAMS_ID.AsInteger;
                   qryGamesPLAYER_AWAY.AsInteger := qryTeamsTEAMS_ID.AsInteger;
                   //Тук нз дали е правилно било е  qryDataEdit.ParamByName('_TEAM_TOURNAMENT').AsInteger
-                  qryGamesTOURNAMENT.AsInteger := ItemIndex;
+                  qryGamesTOURNAMENT.AsInteger := CurrentTournament;
                   qryGames.Post;
                   qryTeams.Next;
                   Inc(br);
@@ -227,6 +230,7 @@ end;
 
 procedure TfmEditTeam.FormShow(Sender: TObject);
 begin
+  pgc1.ActivePage := tb1;
   CloseDataSets;
 
   if pgc1.ActivePage = tb1 then

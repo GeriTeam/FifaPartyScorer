@@ -318,12 +318,11 @@ object fmEditTeam: TfmEditTeam
         Columns = <
           item
             Alignment = taRightJustify
-            ButtonStyle = cbsNone
             Color = 16776176
             Expanded = False
             FieldName = '_NAME_HOME'
             Title.Caption = #1044#1086#1084#1072#1082#1080#1085
-            Width = 102
+            Width = 100
             Visible = True
           end
           item
@@ -357,12 +356,11 @@ object fmEditTeam: TfmEditTeam
             Visible = True
           end
           item
-            ButtonStyle = cbsNone
             Color = clYellow
             Expanded = False
-            FieldName = '_NAME_AWAY'
+            FieldName = '_AWAY_TEAM'
             Title.Caption = #1043#1086#1089#1090
-            Width = 102
+            Width = 100
             Visible = True
           end>
       end
@@ -413,6 +411,14 @@ object fmEditTeam: TfmEditTeam
         Text = #1055#1098#1088#1074#1077#1085#1089#1090#1074#1086
         OnChange = lcbFilterTournamentChange
       end
+      object edt1: TEdit
+        Left = 376
+        Top = 136
+        Width = 121
+        Height = 21
+        TabOrder = 4
+        Text = 'edt1'
+      end
     end
   end
   object dsDataEdit: TDataSource
@@ -423,28 +429,27 @@ object fmEditTeam: TfmEditTeam
   object dsPlayers: TDataSource
     DataSet = qryPlayers
     Left = 288
-    Top = 280
+    Top = 272
   end
   object dsKlasirane: TDataSource
     DataSet = qryKlasirane
     Left = 232
-    Top = 280
+    Top = 272
   end
   object dsTournaments: TDataSource
     DataSet = qryTournaments
-    Left = 176
-    Top = 280
+    Left = 184
+    Top = 272
   end
   object dsGames: TDataSource
-    AutoEdit = False
     DataSet = qryGames
     Left = 328
-    Top = 280
+    Top = 272
   end
   object dsTeams: TDataSource
     DataSet = qryTeams
     Left = 384
-    Top = 280
+    Top = 272
   end
   object dsTeamsAdd: TDataSource
     DataSet = qryTeamsAdd
@@ -454,7 +459,7 @@ object fmEditTeam: TfmEditTeam
   object dsFIFATeams: TDataSource
     DataSet = qryFIFATeams
     Left = 120
-    Top = 280
+    Top = 272
   end
   object qryTeamsAdd: TADOQuery
     Connection = dMain.fifaCon
@@ -500,12 +505,12 @@ object fmEditTeam: TfmEditTeam
     CursorType = ctStatic
     Parameters = <
       item
-        Name = '_TEAM_TOURNAMENT '
+        Name = '_TEAM_TOURNAMENT'
         DataType = ftInteger
         Value = Null
       end
       item
-        Name = '_TEAM_TOURNAMENT '
+        Name = '_TEAM_TOURNAMENT'
         DataType = ftInteger
         Value = Null
       end>
@@ -593,6 +598,7 @@ object fmEditTeam: TfmEditTeam
     end
   end
   object qryTournaments: TADOQuery
+    Active = True
     Connection = dMain.fifaCon
     CursorType = ctStatic
     Parameters = <
@@ -696,6 +702,7 @@ object fmEditTeam: TfmEditTeam
     end
   end
   object qryPlayers: TADOQuery
+    Active = True
     Connection = dMain.fifaCon
     CursorType = ctStatic
     Parameters = <>
@@ -778,6 +785,16 @@ object fmEditTeam: TfmEditTeam
       Size = 255
       Lookup = True
     end
+    object qryGames_AWAY_TEAM: TStringField
+      FieldKind = fkLookup
+      FieldName = '_AWAY_TEAM'
+      LookupDataSet = qryTeams
+      LookupKeyFields = 'TEAMS_ID'
+      LookupResultField = 'TEAM_NAME'
+      KeyFields = 'PLAYER_AWAY'
+      Size = 255
+      Lookup = True
+    end
   end
   object qryTeams: TADOQuery
     Connection = dMain.fifaCon
@@ -789,12 +806,12 @@ object fmEditTeam: TfmEditTeam
         Value = Null
       end
       item
-        Name = '_TOURNAMENT'
+        Name = '_TMHOME'
         DataType = ftInteger
         Value = Null
       end
       item
-        Name = '_TMHOME'
+        Name = '_TOURNAMENT'
         DataType = ftInteger
         Value = Null
       end>

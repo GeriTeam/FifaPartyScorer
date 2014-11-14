@@ -444,7 +444,7 @@ object fmEditTeam: TfmEditTeam
   object dsTeams: TDataSource
     DataSet = qryTeams
     Left = 384
-    Top = 272
+    Top = 280
   end
   object dsTeamsAdd: TDataSource
     DataSet = qryTeamsAdd
@@ -705,7 +705,7 @@ object fmEditTeam: TfmEditTeam
       'from '
       'PLAYERS')
     Left = 288
-    Top = 232
+    Top = 224
     object qryPlayersID: TAutoIncField
       FieldName = 'ID'
       ReadOnly = True
@@ -748,7 +748,7 @@ object fmEditTeam: TfmEditTeam
       '  (:_GAME_TOURNAMENT is null) or'
       '   ( TOURNAMENT = :_GAME_TOURNAMENT) ')
     Left = 336
-    Top = 232
+    Top = 224
     object qryGamesID: TAutoIncField
       FieldName = 'ID'
       ReadOnly = True
@@ -811,7 +811,7 @@ object fmEditTeam: TfmEditTeam
       ' ( TEAM_TOURNAMENT = :_TOURNAMENT) '
       '')
     Left = 392
-    Top = 232
+    Top = 224
     object qryTeamsTEAMS_ID: TAutoIncField
       FieldName = 'TEAMS_ID'
       ReadOnly = True

@@ -12,12 +12,6 @@ uses
 type
   TfmEditTeam = class(TForm)
     tb1: TTabSheet;
-    qryDataEdit: TJvQuery;
-    qryDataEditTEAMS_ID: TIntegerField;
-    qryDataEditTEAM_NAME: TStringField;
-    qryDataEditTEAM_TOURNAMENT: TIntegerField;
-    qryDataEditTEAM_POINTS: TIntegerField;
-    qryDataEditTEAM_MACHES: TIntegerField;
     dsDataEdit: TDataSource;
     tb2: TTabSheet;
     tb3: TTabSheet;
@@ -28,50 +22,16 @@ type
     edtPlayer: TJvDBLookupCombo;
     rgTeam: TJvRadioGroup;
     lblAddTeam: TLabel;
-    qryPlayers: TJvQuery;
     dsPlayers: TDataSource;
-    qryPlayersID: TIntegerField;
-    qryPlayersNAME: TStringField;
-    qryDataEditTEAM_Player: TIntegerField;
-    qryDataEdit_PLAYER_NAME: TStringField;
     JvDBGrid1: TJvDBGrid;
-    qryKlasirane: TJvQuery;
     dsKlasirane: TDataSource;
-    qryKlasiraneTEAMS_ID: TIntegerField;
-    qryKlasiraneTEAM_NAME: TStringField;
-    qryKlasiraneTEAM_TOURNAMENT: TIntegerField;
-    qryKlasiraneTEAM_POINTS: TIntegerField;
-    qryKlasiraneTEAM_MACHES: TIntegerField;
-    qryKlasiraneTEAM_Player: TIntegerField;
-    qryTournaments: TJvQuery;
     dsTournaments: TDataSource;
-    qryTournamentsID: TIntegerField;
-    qryTournamentsNAME: TStringField;
-    qryTournamentsSCHEME: TIntegerField;
     lcbTournament: TJvDBSearchComboBox;
     btnRefresh: TBitBtn;
-    qryTournamentsGENERATED: TBooleanField;
-    qryGames: TJvQuery;
     dsGames: TDataSource;
-    qryGamesID: TIntegerField;
-    qryGamesPLAYER_HOME: TIntegerField;
-    qryGamesPLAYER_AWAY: TIntegerField;
-    qryGamesPLAYER_HOME_SCORE: TIntegerField;
-    qryGamesPLAYER_AWAY_SCORE: TIntegerField;
-    qryTeams: TJvQuery;
     dsTeams: TDataSource;
-    qryTeamsTEAMS_ID: TIntegerField;
-    qryTeamsTEAM_NAME: TStringField;
-    qryTeamsTEAM_TOURNAMENT: TIntegerField;
-    qryTeamsTEAM_POINTS: TIntegerField;
-    qryTeamsTEAM_MACHES: TIntegerField;
-    qryTeamsTEAM_Player: TIntegerField;
-    qryGamesTOURNAMENT: TIntegerField;
-    qryGames_NAME_HOME: TStringField;
-    qryGames_NAME_AWAY: TStringField;
     gdGames: TJvDBGrid;
     btn2: TBitBtn;
-    qryDataEdit_TOURNAMENT_NAME: TStringField;
     pnl1: TPanel;
     btn1: TBitBtn;
     lcbTournamentGenerate: TJvDBSearchComboBox;
@@ -80,26 +40,67 @@ type
     lcbTeamsAddFilter: TJvDBSearchComboBox;
     pgc1: TPageControl;
     lcbInsertTeam: TJvDBSearchComboBox;
-    qryTeamsAdd: TJvQuery;
-    IntegerField1: TIntegerField;
-    StringField1: TStringField;
-    IntegerField2: TIntegerField;
-    IntegerField3: TIntegerField;
-    IntegerField4: TIntegerField;
-    IntegerField5: TIntegerField;
     dsTeamsAdd: TDataSource;
     grp1: TGroupBox;
     edtTEAM_NAME: TEdit;
-    qryKlasirane_Player_Name: TStringField;
     edtAddTournament: TEdit;
     btn3: TBitBtn;
     lbl1: TLabel;
-    qryFIFATeams: TJvQuery;
     dsFIFATeams: TDataSource;
-    qryFIFATeamsID: TIntegerField;
-    qryFIFATeamsNAME: TStringField;
-    qryDataEditFIFA_TEAM: TIntegerField;
     cbRealTeam: TJvDBSearchComboBox;
+    qryTeamsAdd: TADOQuery;
+    qryTeamsAddTEAM_TOURNAMENT: TIntegerField;
+    qryTeamsAddTEAMS_ID: TAutoIncField;
+    qryTeamsAddTEAM_NAME: TWideStringField;
+    qryTeamsAddTEAM_POINTS: TIntegerField;
+    qryTeamsAddTEAM_MACHES: TIntegerField;
+    qryTeamsAddTEAM_Player: TIntegerField;
+    qryDataEdit: TADOQuery;
+    qryDataEditTEAM_TOURNAMENT: TIntegerField;
+    qryDataEditTEAMS_ID: TAutoIncField;
+    qryDataEditTEAM_NAME: TWideStringField;
+    qryDataEditTEAM_POINTS: TIntegerField;
+    qryDataEditTEAM_MACHES: TIntegerField;
+    qryDataEditTEAM_Player: TIntegerField;
+    qryDataEditFIFA_TEAM: TIntegerField;
+    qryFIFATeams: TADOQuery;
+    qryTournaments: TADOQuery;
+    qryFIFATeamsID: TAutoIncField;
+    qryFIFATeamsNAME: TWideStringField;
+    qryTournamentsID: TAutoIncField;
+    qryTournamentsNAME: TWideStringField;
+    qryTournamentsSCHEME: TIntegerField;
+    qryTournamentsGENERATED: TBooleanField;
+    qryKlasirane: TADOQuery;
+    qryKlasiraneTEAMS_ID: TAutoIncField;
+    qryKlasiraneTEAM_NAME: TWideStringField;
+    qryKlasiraneTEAM_TOURNAMENT: TIntegerField;
+    qryKlasiraneTEAM_POINTS: TIntegerField;
+    qryKlasiraneTEAM_MACHES: TIntegerField;
+    qryKlasiraneTEAM_Player: TIntegerField;
+    qryKlasiraneFIFA_TEAM: TIntegerField;
+    qryPlayers: TADOQuery;
+    qryPlayersID: TAutoIncField;
+    qryPlayersNAME: TWideStringField;
+    qryGames: TADOQuery;
+    qryGamesID: TAutoIncField;
+    qryGamesPLAYER_HOME: TIntegerField;
+    qryGamesPLAYER_AWAY: TIntegerField;
+    qryGamesPLAYER_HOME_SCORE: TIntegerField;
+    qryGamesPLAYER_AWAY_SCORE: TIntegerField;
+    qryGamesTOURNAMENT: TIntegerField;
+    qryTeams: TADOQuery;
+    qryTeamsTEAMS_ID: TAutoIncField;
+    qryTeamsTEAM_NAME: TWideStringField;
+    qryTeamsTEAM_TOURNAMENT: TIntegerField;
+    qryTeamsTEAM_POINTS: TIntegerField;
+    qryTeamsTEAM_MACHES: TIntegerField;
+    qryTeamsTEAM_Player: TIntegerField;
+    qryTeamsFIFA_TEAM: TIntegerField;
+    qryKlasirane_Player_Name: TStringField;
+    qryDataEdit_TOURNAMENT_NAME: TStringField;
+    qryDataEdit_PLAYER_NAME: TStringField;
+    qryGames_NAME_HOME: TStringField;
     procedure lcbTournamentChange(Sender: TObject);
     procedure pgctb2Change(Sender: TObject);
     procedure FormShow(Sender: TObject);
@@ -116,7 +117,7 @@ type
     procedure SetTournamentGenerated(param :Integer);
     function GetTournamentGenerated(param :Integer) : Boolean;
   public
-    { Public declarations }
+    procedure SetParamsAdo (qry : TADOQuery; Prm : string; Val : Variant);
   end;
 
 var
@@ -156,14 +157,14 @@ br :Integer;
 WinMessage : String;
 begin
   qryGames.Close;
-  qryGames.ParamByName('_GAME_TOURNAMENT').Clear;
+  SetParamsAdo(qryGames,'_GAME_TOURNAMENT', null);
   br := 0;
   ItemIndex := lcbTournamentGenerate.ItemIndex + 1;
   isFilter := False;
     if not GetTournamentGenerated(ItemIndex) then
       begin
         qryDataEdit.Close;
-        qryDataEdit.ParamByName('_TEAM_TOURNAMENT').AsInteger := ItemIndex;
+        SetParamsAdo(qryDataEdit,'_TEAM_TOURNAMENT', ItemIndex);
         qryDataEdit.Open;
         qryGames.Open;
 //        qryTournaments.Close;
@@ -174,16 +175,16 @@ begin
           while not qryDataEdit.Eof do
             begin
               qryTeams.Close;
-              qryTeams.ParamByName('_TOURNAMENT').AsInteger := ItemIndex;
-              qryTeams.ParamByName('_TMHOME').AsInteger :=
-                qryDataEditTEAMS_ID.AsInteger;
+              SetParamsAdo(qryTeams,'_TOURNAMENT', ItemIndex);
+              SetParamsAdo(qryTeams,'_TMHOME', qryDataEditTEAMS_ID.AsInteger);
               qryTeams.Open;
               while not qryTeams.Eof do
                 begin
                   qryGames.Insert;
                   qryGamesPLAYER_HOME.AsInteger := qryDataEditTEAMS_ID.AsInteger;
                   qryGamesPLAYER_AWAY.AsInteger := qryTeamsTEAMS_ID.AsInteger;
-                  qryGamesTOURNAMENT.AsInteger := qryDataEdit.ParamByName('_TEAM_TOURNAMENT').AsInteger;
+                  //Тук нз дали е правилно било е  qryDataEdit.ParamByName('_TEAM_TOURNAMENT').AsInteger
+                  qryGamesTOURNAMENT.AsInteger := ItemIndex;
                   qryGames.Post;
                   qryTeams.Next;
                   Inc(br);
@@ -242,13 +243,12 @@ function TfmEditTeam.GetTournamentGenerated(param :Integer): Boolean;
 begin
 
   qryTournaments.Close;
-    qryTournaments.ParamByName('_TR_ID').AsInteger :=
-      param;
+  SetParamsAdo(qryTournaments,'_TR_ID',param);
     qryTournaments.Open;
   if qryTournamentsGENERATED.AsBoolean = True then
     begin
       qryTournaments.Close;
-      qryTournaments.ParamByName('_TR_ID').Clear;
+      SetParamsAdo(qryTournaments,'_TR_ID',null);
       qryTournaments.Open;
       lcbTournamentGenerate.ItemIndex := param - 1;
       Result := True
@@ -256,7 +256,7 @@ begin
   else
     begin
       qryTournaments.Close;
-      qryTournaments.ParamByName('_TR_ID').Clear;
+      SetParamsAdo(qryTournaments,'_TR_ID', null);
       qryTournaments.Open;
       lcbTournamentGenerate.ItemIndex := param - 1;
       Result := False;
@@ -271,8 +271,8 @@ begin
     isFilter := True;
     qryGames.Close;
     qryTeams.Close;
-    qryGames.ParamByName('_GAME_TOURNAMENT').AsInteger := lcbFilterTournament.ItemIndex + 1;
-    qryTeams.ParamByName('_TOURNAMENT').AsInteger := lcbFilterTournament.ItemIndex + 1;
+    SetParamsAdo(qryGames,'_GAME_TOURNAMENT',lcbFilterTournament.ItemIndex + 1);
+    SetParamsAdo(qryTeams,'_TOURNAMENT',lcbFilterTournament.ItemIndex + 1);
   finally
     qryTeams.Open;
     qryGames.Open;
@@ -287,7 +287,7 @@ begin
     isFilter := True;
     qryDataEdit.Close;
     qryPlayers.Close;
-    qryDataEdit.ParamByName('_TEAM_TOURNAMENT').AsInteger := lcbFilterTournament.ItemIndex + 1;
+    SetParamsAdo(qryDataEdit, '_TEAM_TOURNAMENT', lcbFilterTournament.ItemIndex + 1);
   finally
     qryDataEdit.Open;
     qryPlayers.Open;
@@ -300,7 +300,7 @@ begin
     begin
       qryPlayers.Close;
       qryKlasirane.Close;
-      qryKlasirane.ParamByName('TOURNAMENT').AsInteger := lcbTournamentGenerate.ItemIndex + 1;
+      SetParamsAdo(qryKlasirane, 'TOURNAMENT', lcbTournamentGenerate.ItemIndex + 1);
       qryPlayers.Open;
       qryKlasirane.Open;
     end;
@@ -324,7 +324,7 @@ end;
 procedure TfmEditTeam.qryTeamsBeforeOpen(DataSet: TDataSet);
 begin
   if isFilter then
-    qryTeams.ParamByName('_TMHOME').Clear;
+    SetParamsAdo(qryTeams, '_TMHOME', null );
 end;
 
 procedure TfmEditTeam.rgTeamClick(Sender: TObject);
@@ -341,17 +341,26 @@ begin
   end;
 end;
 
+procedure TfmEditTeam.SetParamsAdo(qry: TADOQuery; Prm: string; Val: Variant);
+var
+  Z : Integer;
+begin
+  with qry do
+    for Z:= 0 to Parameters.Count - 1 do
+      if (Prm = '*') or (Parameters[Z].Name = Prm) then
+        Parameters[Z].Value:= Val;
+end;
+
 procedure TfmEditTeam.SetTournamentGenerated(param :Integer);
 begin
   qryTournaments.Close;
-  qryTournaments.ParamByName('_TR_ID').AsInteger :=
-    param;
+  SetParamsAdo(qryTournaments,'_TR_ID', param);
   qryTournaments.Open;
   qryTournaments.Edit;
   qryTournamentsGENERATED.AsBoolean := True;
   qryTournaments.Post;
   qryTournaments.Close;
-  qryTournaments.ParamByName('_TR_ID').Clear;
+  SetParamsAdo(qryTournaments,'_TR_ID', null);
   qryTournaments.Open;
 end;
 

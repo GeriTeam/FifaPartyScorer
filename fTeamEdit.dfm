@@ -20,7 +20,7 @@ object fmEditTeam: TfmEditTeam
     Top = 8
     Width = 561
     Height = 305
-    ActivePage = tb1
+    ActivePage = tb3
     TabOrder = 0
     OnChange = pgctb2Change
     object tb1: TTabSheet
@@ -85,7 +85,7 @@ object fmEditTeam: TfmEditTeam
       end
       object lcbTournament: TJvDBSearchComboBox
         Left = 3
-        Top = 16
+        Top = 11
         Width = 446
         Height = 21
         DataField = 'NAME'
@@ -415,9 +415,100 @@ object fmEditTeam: TfmEditTeam
       end
     end
   end
-  object qryDataEdit: TJvQuery
-    DatabaseName = 'db'
-    RequestLive = True
+  object dsDataEdit: TDataSource
+    DataSet = qryDataEdit
+    Left = 72
+    Top = 272
+  end
+  object dsPlayers: TDataSource
+    DataSet = qryPlayers
+    Left = 288
+    Top = 280
+  end
+  object dsKlasirane: TDataSource
+    DataSet = qryKlasirane
+    Left = 232
+    Top = 280
+  end
+  object dsTournaments: TDataSource
+    DataSet = qryTournaments
+    Left = 176
+    Top = 280
+  end
+  object dsGames: TDataSource
+    AutoEdit = False
+    DataSet = qryGames
+    Left = 328
+    Top = 280
+  end
+  object dsTeams: TDataSource
+    DataSet = qryTeams
+    Left = 384
+    Top = 272
+  end
+  object dsTeamsAdd: TDataSource
+    DataSet = qryTeamsAdd
+    Left = 16
+    Top = 272
+  end
+  object dsFIFATeams: TDataSource
+    DataSet = qryFIFATeams
+    Left = 120
+    Top = 280
+  end
+  object qryTeamsAdd: TADOQuery
+    Connection = dMain.fifaCon
+    CursorType = ctStatic
+    Parameters = <>
+    SQL.Strings = (
+      'select'
+      'TEAM_TOURNAMENT,'
+      'TEAMS_ID,'
+      'TEAM_NAME,'
+      'TEAM_POINTS,'
+      'TEAM_MACHES,'
+      'TEAM_Player'
+      ''
+      'from '
+      'TEAMS'
+      '')
+    Left = 16
+    Top = 224
+    object qryTeamsAddTEAM_TOURNAMENT: TIntegerField
+      FieldName = 'TEAM_TOURNAMENT'
+    end
+    object qryTeamsAddTEAMS_ID: TAutoIncField
+      FieldName = 'TEAMS_ID'
+      ReadOnly = True
+    end
+    object qryTeamsAddTEAM_NAME: TWideStringField
+      FieldName = 'TEAM_NAME'
+      Size = 255
+    end
+    object qryTeamsAddTEAM_POINTS: TIntegerField
+      FieldName = 'TEAM_POINTS'
+    end
+    object qryTeamsAddTEAM_MACHES: TIntegerField
+      FieldName = 'TEAM_MACHES'
+    end
+    object qryTeamsAddTEAM_Player: TIntegerField
+      FieldName = 'TEAM_Player'
+    end
+  end
+  object qryDataEdit: TADOQuery
+    Connection = dMain.fifaCon
+    CursorType = ctStatic
+    Parameters = <
+      item
+        Name = '_TEAM_TOURNAMENT '
+        DataType = ftInteger
+        Value = Null
+      end
+      item
+        Name = '_TEAM_TOURNAMENT '
+        DataType = ftInteger
+        Value = Null
+      end>
     SQL.Strings = (
       'select'
       'TEAM_TOURNAMENT,'
@@ -434,54 +525,30 @@ object fmEditTeam: TfmEditTeam
       'where'
       '  (:_TEAM_TOURNAMENT is null) or'
       '   ( TEAM_TOURNAMENT = :_TEAM_TOURNAMENT) ')
-    Macros = <>
-    Left = 104
-    Top = 104
-    ParamData = <
-      item
-        DataType = ftInteger
-        Name = '_TEAM_TOURNAMENT'
-        ParamType = ptUnknown
-      end
-      item
-        DataType = ftInteger
-        Name = '_TEAM_TOURNAMENT'
-        ParamType = ptUnknown
-      end>
-    object qryDataEditTEAMS_ID: TIntegerField
-      FieldName = 'TEAMS_ID'
-      Origin = 'DB.TEAMS.TEAMS_ID'
-    end
-    object qryDataEditTEAM_NAME: TStringField
-      FieldName = 'TEAM_NAME'
-      Origin = 'DB.TEAMS.TEAM_NAME'
-      Size = 255
-    end
+    Left = 72
+    Top = 224
     object qryDataEditTEAM_TOURNAMENT: TIntegerField
       FieldName = 'TEAM_TOURNAMENT'
-      Origin = 'DB.TEAMS.TEAM_TOURNAMENT'
+    end
+    object qryDataEditTEAMS_ID: TAutoIncField
+      FieldName = 'TEAMS_ID'
+      ReadOnly = True
+    end
+    object qryDataEditTEAM_NAME: TWideStringField
+      FieldName = 'TEAM_NAME'
+      Size = 255
     end
     object qryDataEditTEAM_POINTS: TIntegerField
       FieldName = 'TEAM_POINTS'
-      Origin = 'DB.TEAMS.TEAM_POINTS'
     end
     object qryDataEditTEAM_MACHES: TIntegerField
       FieldName = 'TEAM_MACHES'
-      Origin = 'DB.TEAMS.TEAM_MACHES'
     end
     object qryDataEditTEAM_Player: TIntegerField
       FieldName = 'TEAM_Player'
-      Origin = 'DB.TEAMS.TEAM_Player'
     end
-    object qryDataEdit_PLAYER_NAME: TStringField
-      FieldKind = fkLookup
-      FieldName = '_PLAYER_NAME'
-      LookupDataSet = qryPlayers
-      LookupKeyFields = 'ID'
-      LookupResultField = 'NAME'
-      KeyFields = 'TEAM_Player'
-      Size = 255
-      Lookup = True
+    object qryDataEditFIFA_TEAM: TIntegerField
+      FieldName = 'FIFA_TEAM'
     end
     object qryDataEdit_TOURNAMENT_NAME: TStringField
       FieldKind = fkLookup
@@ -493,94 +560,9 @@ object fmEditTeam: TfmEditTeam
       Size = 255
       Lookup = True
     end
-    object qryDataEditFIFA_TEAM: TIntegerField
-      FieldName = 'FIFA_TEAM'
-      Origin = 'DB.TEAMS.FIFA_TEAM'
-    end
-  end
-  object dsDataEdit: TDataSource
-    DataSet = qryDataEdit
-    Left = 104
-    Top = 128
-  end
-  object qryPlayers: TJvQuery
-    DatabaseName = 'db'
-    RequestLive = True
-    SQL.Strings = (
-      'select'
-      '*'
-      'from '
-      'PLAYERS')
-    Macros = <>
-    Left = 168
-    Top = 104
-    object qryPlayersID: TIntegerField
-      FieldName = 'ID'
-      Origin = 'DB.PLAYERS.ID'
-    end
-    object qryPlayersNAME: TStringField
-      FieldName = 'NAME'
-      Origin = 'DB.PLAYERS.NAME'
-      Size = 255
-    end
-  end
-  object dsPlayers: TDataSource
-    DataSet = qryPlayers
-    Left = 168
-    Top = 128
-  end
-  object qryKlasirane: TJvQuery
-    DatabaseName = 'db'
-    RequestLive = True
-    SQL.Strings = (
-      'select'
-      '*'
-      ''
-      'from '
-      'TEAMS'
-      ''
-      'where'
-      'TEAM_TOURNAMENT =:TOURNAMENT'
-      ''
-      'order by'
-      'TEAM_POINTS')
-    Macros = <>
-    Left = 224
-    Top = 104
-    ParamData = <
-      item
-        DataType = ftInteger
-        Name = 'TOURNAMENT'
-        ParamType = ptUnknown
-      end>
-    object qryKlasiraneTEAMS_ID: TIntegerField
-      FieldName = 'TEAMS_ID'
-      Origin = 'DB.TEAMS.TEAMS_ID'
-    end
-    object qryKlasiraneTEAM_NAME: TStringField
-      FieldName = 'TEAM_NAME'
-      Origin = 'DB.TEAMS.TEAM_NAME'
-      Size = 255
-    end
-    object qryKlasiraneTEAM_TOURNAMENT: TIntegerField
-      FieldName = 'TEAM_TOURNAMENT'
-      Origin = 'DB.TEAMS.TEAM_TOURNAMENT'
-    end
-    object qryKlasiraneTEAM_POINTS: TIntegerField
-      FieldName = 'TEAM_POINTS'
-      Origin = 'DB.TEAMS.TEAM_POINTS'
-    end
-    object qryKlasiraneTEAM_MACHES: TIntegerField
-      FieldName = 'TEAM_MACHES'
-      Origin = 'DB.TEAMS.TEAM_MACHES'
-    end
-    object qryKlasiraneTEAM_Player: TIntegerField
-      FieldName = 'TEAM_Player'
-      Origin = 'DB.TEAMS.TEAM_Player'
-    end
-    object qryKlasirane_Player_Name: TStringField
+    object qryDataEdit_PLAYER_NAME: TStringField
       FieldKind = fkLookup
-      FieldName = '_Player_Name'
+      FieldName = '_PLAYER_NAME'
       LookupDataSet = qryPlayers
       LookupKeyFields = 'ID'
       LookupResultField = 'NAME'
@@ -589,14 +571,41 @@ object fmEditTeam: TfmEditTeam
       Lookup = True
     end
   end
-  object dsKlasirane: TDataSource
-    DataSet = qryKlasirane
-    Left = 224
-    Top = 144
+  object qryFIFATeams: TADOQuery
+    Connection = dMain.fifaCon
+    CursorType = ctStatic
+    Parameters = <>
+    SQL.Strings = (
+      'select'
+      '*'
+      ''
+      'from '
+      'FIFA_TEAMS')
+    Left = 128
+    Top = 224
+    object qryFIFATeamsID: TAutoIncField
+      FieldName = 'ID'
+      ReadOnly = True
+    end
+    object qryFIFATeamsNAME: TWideStringField
+      FieldName = 'NAME'
+      Size = 255
+    end
   end
-  object qryTournaments: TJvQuery
-    DatabaseName = 'db'
-    RequestLive = True
+  object qryTournaments: TADOQuery
+    Connection = dMain.fifaCon
+    CursorType = ctStatic
+    Parameters = <
+      item
+        Name = '_TR_ID'
+        DataType = ftInteger
+        Value = Null
+      end
+      item
+        Name = '_TR_ID'
+        DataType = ftInteger
+        Value = Null
+      end>
     SQL.Strings = (
       'select'
       'ID,'
@@ -612,46 +621,122 @@ object fmEditTeam: TfmEditTeam
       '   ( ID = :_TR_ID) '
       'order by'
       'ID')
-    Macros = <>
-    Left = 280
-    Top = 104
-    ParamData = <
-      item
-        DataType = ftInteger
-        Name = '_TR_ID'
-        ParamType = ptUnknown
-      end
-      item
-        DataType = ftInteger
-        Name = '_TR_ID'
-        ParamType = ptUnknown
-      end>
-    object qryTournamentsID: TIntegerField
+    Left = 176
+    Top = 224
+    object qryTournamentsID: TAutoIncField
       FieldName = 'ID'
-      Origin = 'DB.TOURNAMENTS.ID'
+      ReadOnly = True
     end
-    object qryTournamentsNAME: TStringField
+    object qryTournamentsNAME: TWideStringField
       FieldName = 'NAME'
-      Origin = 'DB.TOURNAMENTS.NAME'
       Size = 255
     end
     object qryTournamentsSCHEME: TIntegerField
       FieldName = 'SCHEME'
-      Origin = 'DB.TOURNAMENTS.SCHEME'
     end
     object qryTournamentsGENERATED: TBooleanField
       FieldName = 'GENERATED'
-      Origin = 'DB.TOURNAMENTS.ID'
     end
   end
-  object dsTournaments: TDataSource
-    DataSet = qryTournaments
-    Left = 264
-    Top = 168
+  object qryKlasirane: TADOQuery
+    Connection = dMain.fifaCon
+    CursorType = ctStatic
+    Parameters = <
+      item
+        Name = 'TOURNAMENT'
+        DataType = ftInteger
+        Value = Null
+      end>
+    SQL.Strings = (
+      'select'
+      '*'
+      ''
+      'from '
+      'TEAMS'
+      ''
+      'where'
+      'TEAM_TOURNAMENT =:TOURNAMENT'
+      ''
+      'order by'
+      'TEAM_POINTS')
+    Left = 232
+    Top = 224
+    object qryKlasiraneTEAMS_ID: TAutoIncField
+      FieldName = 'TEAMS_ID'
+      ReadOnly = True
+    end
+    object qryKlasiraneTEAM_NAME: TWideStringField
+      FieldName = 'TEAM_NAME'
+      Size = 255
+    end
+    object qryKlasiraneTEAM_TOURNAMENT: TIntegerField
+      FieldName = 'TEAM_TOURNAMENT'
+    end
+    object qryKlasiraneTEAM_POINTS: TIntegerField
+      FieldName = 'TEAM_POINTS'
+    end
+    object qryKlasiraneTEAM_MACHES: TIntegerField
+      FieldName = 'TEAM_MACHES'
+    end
+    object qryKlasiraneTEAM_Player: TIntegerField
+      FieldName = 'TEAM_Player'
+    end
+    object qryKlasiraneFIFA_TEAM: TIntegerField
+      FieldName = 'FIFA_TEAM'
+    end
+    object qryKlasirane_Player_Name: TStringField
+      FieldKind = fkLookup
+      FieldName = '_Player_Name'
+      LookupDataSet = qryPlayers
+      LookupKeyFields = 'ID'
+      LookupResultField = 'NAME'
+      KeyFields = 'TEAM_Player'
+      Size = 255
+      Lookup = True
+    end
   end
-  object qryGames: TJvQuery
-    DatabaseName = 'db'
-    RequestLive = True
+  object qryPlayers: TADOQuery
+    Connection = dMain.fifaCon
+    CursorType = ctStatic
+    Parameters = <>
+    SQL.Strings = (
+      'select'
+      '*'
+      'from '
+      'PLAYERS')
+    Left = 288
+    Top = 232
+    object qryPlayersID: TAutoIncField
+      FieldName = 'ID'
+      ReadOnly = True
+    end
+    object qryPlayersNAME: TWideStringField
+      FieldName = 'NAME'
+      Size = 255
+    end
+  end
+  object qryGames: TADOQuery
+    Connection = dMain.fifaCon
+    CursorType = ctStatic
+    Parameters = <
+      item
+        Name = '_GAME_TOURNAMENT'
+        Attributes = [paNullable]
+        DataType = ftInteger
+        NumericScale = 255
+        Precision = 255
+        Size = 510
+        Value = Null
+      end
+      item
+        Name = '_GAME_TOURNAMENT'
+        Attributes = [paNullable]
+        DataType = ftInteger
+        NumericScale = 255
+        Precision = 255
+        Size = 510
+        Value = Null
+      end>
     SQL.Strings = (
       'select'
       '*'
@@ -662,43 +747,26 @@ object fmEditTeam: TfmEditTeam
       'where'
       '  (:_GAME_TOURNAMENT is null) or'
       '   ( TOURNAMENT = :_GAME_TOURNAMENT) ')
-    Macros = <>
-    Left = 144
-    Top = 184
-    ParamData = <
-      item
-        DataType = ftInteger
-        Name = '_GAME_TOURNAMENT'
-        ParamType = ptUnknown
-      end
-      item
-        DataType = ftInteger
-        Name = '_GAME_TOURNAMENT'
-        ParamType = ptUnknown
-      end>
-    object qryGamesID: TIntegerField
+    Left = 336
+    Top = 232
+    object qryGamesID: TAutoIncField
       FieldName = 'ID'
-      Origin = 'DB.GAMES.ID'
+      ReadOnly = True
     end
     object qryGamesPLAYER_HOME: TIntegerField
       FieldName = 'PLAYER_HOME'
-      Origin = 'DB.GAMES.PLAYER_HOME'
     end
     object qryGamesPLAYER_AWAY: TIntegerField
       FieldName = 'PLAYER_AWAY'
-      Origin = 'DB.GAMES.PLAYER_AWAY'
     end
     object qryGamesPLAYER_HOME_SCORE: TIntegerField
       FieldName = 'PLAYER_HOME_SCORE'
-      Origin = 'DB.GAMES.PLAYER_HOME_SCORE'
     end
     object qryGamesPLAYER_AWAY_SCORE: TIntegerField
       FieldName = 'PLAYER_AWAY_SCORE'
-      Origin = 'DB.GAMES.PLAYER_AWAY_SCORE'
     end
     object qryGamesTOURNAMENT: TIntegerField
       FieldName = 'TOURNAMENT'
-      Origin = 'DB.GAMES.TOURNAMENT'
     end
     object qryGames_NAME_HOME: TStringField
       FieldKind = fkLookup
@@ -710,27 +778,26 @@ object fmEditTeam: TfmEditTeam
       Size = 255
       Lookup = True
     end
-    object qryGames_NAME_AWAY: TStringField
-      FieldKind = fkLookup
-      FieldName = '_NAME_AWAY'
-      LookupDataSet = qryTeams
-      LookupKeyFields = 'TEAMS_ID'
-      LookupResultField = 'TEAM_NAME'
-      KeyFields = 'PLAYER_AWAY'
-      Size = 255
-      Lookup = True
-    end
   end
-  object dsGames: TDataSource
-    AutoEdit = False
-    DataSet = qryGames
-    Left = 152
-    Top = 224
-  end
-  object qryTeams: TJvQuery
-    BeforeOpen = qryTeamsBeforeOpen
-    DatabaseName = 'db'
-    RequestLive = True
+  object qryTeams: TADOQuery
+    Connection = dMain.fifaCon
+    CursorType = ctStatic
+    Parameters = <
+      item
+        Name = '_TMHOME'
+        DataType = ftInteger
+        Value = Null
+      end
+      item
+        Name = '_TOURNAMENT'
+        DataType = ftInteger
+        Value = Null
+      end
+      item
+        Name = '_TMHOME'
+        DataType = ftInteger
+        Value = Null
+      end>
     SQL.Strings = (
       'select'
       '*'
@@ -743,130 +810,30 @@ object fmEditTeam: TfmEditTeam
       ' ( TEAMS_ID <>:_TMHOME))  and'
       ' ( TEAM_TOURNAMENT = :_TOURNAMENT) '
       '')
-    Macros = <>
-    Left = 96
-    Top = 184
-    ParamData = <
-      item
-        DataType = ftInteger
-        Name = '_TMHOME'
-        ParamType = ptUnknown
-      end
-      item
-        DataType = ftInteger
-        Name = '_TMHOME'
-        ParamType = ptUnknown
-      end
-      item
-        DataType = ftInteger
-        Name = '_TOURNAMENT'
-        ParamType = ptUnknown
-      end>
-    object qryTeamsTEAMS_ID: TIntegerField
+    Left = 392
+    Top = 232
+    object qryTeamsTEAMS_ID: TAutoIncField
       FieldName = 'TEAMS_ID'
-      Origin = 'DB.TEAMS.TEAMS_ID'
+      ReadOnly = True
     end
-    object qryTeamsTEAM_NAME: TStringField
+    object qryTeamsTEAM_NAME: TWideStringField
       FieldName = 'TEAM_NAME'
-      Origin = 'DB.TEAMS.TEAM_NAME'
       Size = 255
     end
     object qryTeamsTEAM_TOURNAMENT: TIntegerField
       FieldName = 'TEAM_TOURNAMENT'
-      Origin = 'DB.TEAMS.TEAM_TOURNAMENT'
     end
     object qryTeamsTEAM_POINTS: TIntegerField
       FieldName = 'TEAM_POINTS'
-      Origin = 'DB.TEAMS.TEAM_POINTS'
     end
     object qryTeamsTEAM_MACHES: TIntegerField
       FieldName = 'TEAM_MACHES'
-      Origin = 'DB.TEAMS.TEAM_MACHES'
     end
     object qryTeamsTEAM_Player: TIntegerField
       FieldName = 'TEAM_Player'
-      Origin = 'DB.TEAMS.TEAM_Player'
     end
-  end
-  object dsTeams: TDataSource
-    DataSet = qryTeams
-    Left = 104
-    Top = 224
-  end
-  object qryTeamsAdd: TJvQuery
-    DatabaseName = 'db'
-    RequestLive = True
-    SQL.Strings = (
-      'select'
-      'TEAM_TOURNAMENT,'
-      'TEAMS_ID,'
-      'TEAM_NAME,'
-      'TEAM_POINTS,'
-      'TEAM_MACHES,'
-      'TEAM_Player'
-      ''
-      'from '
-      'TEAMS'
-      '')
-    Macros = <>
-    Left = 24
-    Top = 104
-    object IntegerField1: TIntegerField
-      FieldName = 'TEAMS_ID'
-      Origin = 'DB.TEAMS.TEAMS_ID'
+    object qryTeamsFIFA_TEAM: TIntegerField
+      FieldName = 'FIFA_TEAM'
     end
-    object StringField1: TStringField
-      FieldName = 'TEAM_NAME'
-      Origin = 'DB.TEAMS.TEAM_NAME'
-      Size = 255
-    end
-    object IntegerField2: TIntegerField
-      FieldName = 'TEAM_TOURNAMENT'
-      Origin = 'DB.TEAMS.TEAM_TOURNAMENT'
-    end
-    object IntegerField3: TIntegerField
-      FieldName = 'TEAM_POINTS'
-      Origin = 'DB.TEAMS.TEAM_POINTS'
-    end
-    object IntegerField4: TIntegerField
-      FieldName = 'TEAM_MACHES'
-      Origin = 'DB.TEAMS.TEAM_MACHES'
-    end
-    object IntegerField5: TIntegerField
-      FieldName = 'TEAM_Player'
-      Origin = 'DB.TEAMS.TEAM_Player'
-    end
-  end
-  object dsTeamsAdd: TDataSource
-    DataSet = qryTeamsAdd
-    Left = 24
-    Top = 128
-  end
-  object qryFIFATeams: TJvQuery
-    DatabaseName = 'db'
-    RequestLive = True
-    SQL.Strings = (
-      'select'
-      '*'
-      ''
-      'from '
-      'FIFA_TEAMS')
-    Macros = <>
-    Left = 464
-    Top = 120
-    object qryFIFATeamsID: TIntegerField
-      FieldName = 'ID'
-      Origin = 'DB.FIFA_TEAMS.ID'
-    end
-    object qryFIFATeamsNAME: TStringField
-      FieldName = 'NAME'
-      Origin = 'DB.FIFA_TEAMS.NAME'
-      Size = 255
-    end
-  end
-  object dsFIFATeams: TDataSource
-    DataSet = qryFIFATeams
-    Left = 472
-    Top = 160
   end
 end

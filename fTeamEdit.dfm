@@ -2,7 +2,7 @@ object fmEditTeam: TfmEditTeam
   Left = 0
   Top = 0
   Caption = 'FIFA Party Scorer'
-  ClientHeight = 321
+  ClientHeight = 353
   ClientWidth = 577
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
@@ -20,7 +20,7 @@ object fmEditTeam: TfmEditTeam
     Top = 8
     Width = 561
     Height = 305
-    ActivePage = tb3
+    ActivePage = tb1
     TabOrder = 0
     OnChange = pgctb2Change
     object tb1: TTabSheet
@@ -410,45 +410,54 @@ object fmEditTeam: TfmEditTeam
       end
     end
   end
+  object btn4: TBitBtn
+    Left = 8
+    Top = 319
+    Width = 105
+    Height = 25
+    Caption = #1048#1079#1080#1075#1088#1072#1081' '#1084#1072#1095
+    TabOrder = 1
+    OnClick = btn4Click
+  end
   object dsDataEdit: TDataSource
     DataSet = qryDataEdit
     Left = 72
-    Top = 272
+    Top = 256
   end
   object dsPlayers: TDataSource
     DataSet = qryPlayers
     Left = 288
-    Top = 272
+    Top = 256
   end
   object dsKlasirane: TDataSource
     DataSet = qryKlasirane
     Left = 232
-    Top = 272
+    Top = 256
   end
   object dsTournaments: TDataSource
     DataSet = qryTournaments
     Left = 184
-    Top = 272
+    Top = 256
   end
   object dsGames: TDataSource
     DataSet = qryGames
     Left = 328
-    Top = 272
+    Top = 256
   end
   object dsTeams: TDataSource
     DataSet = qryTeams
     Left = 384
-    Top = 272
+    Top = 256
   end
   object dsTeamsAdd: TDataSource
     DataSet = qryTeamsAdd
     Left = 16
-    Top = 272
+    Top = 256
   end
   object dsFIFATeams: TDataSource
     DataSet = qryFIFATeams
     Left = 120
-    Top = 272
+    Top = 256
   end
   object qryTeamsAdd: TADOQuery
     Connection = dMain.fifaCon
@@ -467,7 +476,7 @@ object fmEditTeam: TfmEditTeam
       'TEAMS'
       '')
     Left = 16
-    Top = 224
+    Top = 208
     object qryTeamsAddTEAM_TOURNAMENT: TIntegerField
       FieldName = 'TEAM_TOURNAMENT'
     end
@@ -520,7 +529,7 @@ object fmEditTeam: TfmEditTeam
       '  (:_TEAM_TOURNAMENT is null) or'
       '   ( TEAM_TOURNAMENT = :_TEAM_TOURNAMENT) ')
     Left = 72
-    Top = 224
+    Top = 208
     object qryDataEditTEAM_TOURNAMENT: TIntegerField
       FieldName = 'TEAM_TOURNAMENT'
     end
@@ -576,7 +585,7 @@ object fmEditTeam: TfmEditTeam
       'from '
       'FIFA_TEAMS')
     Left = 128
-    Top = 224
+    Top = 208
     object qryFIFATeamsID: TAutoIncField
       FieldName = 'ID'
       ReadOnly = True
@@ -617,7 +626,7 @@ object fmEditTeam: TfmEditTeam
       'order by'
       'ID')
     Left = 176
-    Top = 224
+    Top = 208
     object qryTournamentsID: TAutoIncField
       FieldName = 'ID'
       ReadOnly = True
@@ -655,7 +664,7 @@ object fmEditTeam: TfmEditTeam
       'order by'
       'TEAM_POINTS')
     Left = 232
-    Top = 224
+    Top = 208
     object qryKlasiraneTEAMS_ID: TAutoIncField
       FieldName = 'TEAMS_ID'
       ReadOnly = True
@@ -701,7 +710,7 @@ object fmEditTeam: TfmEditTeam
       'from '
       'PLAYERS')
     Left = 288
-    Top = 224
+    Top = 208
     object qryPlayersID: TAutoIncField
       FieldName = 'ID'
       ReadOnly = True
@@ -744,7 +753,7 @@ object fmEditTeam: TfmEditTeam
       '  (:_GAME_TOURNAMENT is null) or'
       '   ( TOURNAMENT = :_GAME_TOURNAMENT) ')
     Left = 336
-    Top = 224
+    Top = 208
     object qryGamesID: TAutoIncField
       FieldName = 'ID'
       ReadOnly = True
@@ -817,7 +826,7 @@ object fmEditTeam: TfmEditTeam
       ' ( TEAM_TOURNAMENT = :_TOURNAMENT) '
       '')
     Left = 392
-    Top = 224
+    Top = 208
     object qryTeamsTEAMS_ID: TAutoIncField
       FieldName = 'TEAMS_ID'
       ReadOnly = True

@@ -51,6 +51,9 @@
 			<DCCReference Include="fTeamEdit.pas">
 				<Form>fmEditTeam</Form>
 			</DCCReference>
+			<DCCReference Include="fPlayGame.pas">
+				<Form>fmGamePlay</Form>
+			</DCCReference>
 			<BuildConfiguration Include="Release">
 				<Key>Cfg_2</Key>
 				<CfgParent>Base</CfgParent>

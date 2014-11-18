@@ -103,6 +103,7 @@ type
     qryDataEdit_PLAYER_NAME: TStringField;
     qryGames_NAME_HOME: TStringField;
     qryGames_AWAY_TEAM: TStringField;
+    btn4: TBitBtn;
     procedure lcbTournamentChange(Sender: TObject);
     procedure pgctb2Change(Sender: TObject);
     procedure FormShow(Sender: TObject);
@@ -114,6 +115,7 @@ type
     procedure BitBtn3Click(Sender: TObject);
     procedure rgTeamClick(Sender: TObject);
     procedure btn3Click(Sender: TObject);
+    procedure btn4Click(Sender: TObject);
   private
     procedure CloseDataSets();
     procedure SetTournamentGenerated(param :Integer);
@@ -125,10 +127,11 @@ type
 var
   fmEditTeam: TfmEditTeam;
   isFilter :Boolean;
+  viCurrentTournament :Integer;
 
 implementation
 
-uses dmMain;
+uses dmMain, fPlayGame;
 
 {$R *.dfm}
 
@@ -213,6 +216,14 @@ begin
   MessageDlg('Успешно създаден Турнир ''' + edtAddTournament.Text + '''', mtInformation, mbOKCancel, 0 );
 end;
 
+procedure TfmEditTeam.btn4Click(Sender: TObject);
+begin
+  if viCurrentTournament > 0 then
+    fmGamePlay.ShowModal
+  else
+  ShowMessage(' Не е избран турнир ! ');
+end;
+
 procedure TfmEditTeam.CloseDataSets;
 begin
   qryKlasirane.Close;
@@ -232,6 +243,7 @@ procedure TfmEditTeam.FormShow(Sender: TObject);
 begin
   pgc1.ActivePage := tb1;
   CloseDataSets;
+  viCurrentTournament := -1;
 
   if pgc1.ActivePage = tb1 then
     qryTournaments.Open;
@@ -277,6 +289,7 @@ begin
     qryTeams.Close;
     SetParamsAdo(qryGames,'_GAME_TOURNAMENT',lcbFilterTournament.ItemIndex + 1);
     SetParamsAdo(qryTeams,'_TOURNAMENT',lcbFilterTournament.ItemIndex + 1);
+    viCurrentTournament := lcbFilterTournament.ItemIndex + 1;
   finally
     qryTeams.Open;
     qryGames.Open;
@@ -292,6 +305,7 @@ begin
     qryDataEdit.Close;
     qryPlayers.Close;
     SetParamsAdo(qryDataEdit, '_TEAM_TOURNAMENT', lcbFilterTournament.ItemIndex + 1);
+    viCurrentTournament := lcbFilterTournament.ItemIndex + 1;
   finally
     qryDataEdit.Open;
     qryPlayers.Open;
@@ -306,6 +320,7 @@ begin
       qryPlayers.Close;
       qryKlasirane.Close;
       SetParamsAdo(qryKlasirane, 'TOURNAMENT', lcbTournamentGenerate.ItemIndex + 1);
+      viCurrentTournament := lcbTournamentGenerate.ItemIndex + 1;
       qryPlayers.Open;
       qryKlasirane.Open;
     end;

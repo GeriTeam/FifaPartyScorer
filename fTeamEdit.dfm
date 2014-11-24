@@ -596,7 +596,6 @@ object fmEditTeam: TfmEditTeam
     end
   end
   object qryTournaments: TADOQuery
-    Active = True
     Connection = dMain.fifaCon
     CursorType = ctStatic
     Parameters = <
@@ -700,7 +699,6 @@ object fmEditTeam: TfmEditTeam
     end
   end
   object qryPlayers: TADOQuery
-    Active = True
     Connection = dMain.fifaCon
     CursorType = ctStatic
     Parameters = <>

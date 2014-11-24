@@ -3,6 +3,7 @@ object dMain: TdMain
   Height = 150
   Width = 215
   object fifaCon: TADOConnection
+    Connected = True
     ConnectionString = 
       'Provider=Microsoft.Jet.OLEDB.4.0;User ID=Admin;Data Source=D:\FI' +
       'faFriendlyScorer\FifaPartyScorer\DB\FIFAPARTYDB.mdb;Mode=Share D' +

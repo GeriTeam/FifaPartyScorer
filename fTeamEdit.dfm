@@ -419,6 +419,21 @@ object fmEditTeam: TfmEditTeam
     TabOrder = 1
     OnClick = btn4Click
   end
+  object btn5: TButton
+    Left = 119
+    Top = 319
+    Width = 145
+    Height = 25
+    Caption = #1055#1088#1080#1085#1090#1080#1088#1072#1081' '#1082#1083#1072#1089#1080#1088#1072#1085#1077
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clWindowText
+    Font.Height = -11
+    Font.Name = 'btnPrint'
+    Font.Style = []
+    ParentFont = False
+    TabOrder = 2
+    OnClick = btn5Click
+  end
   object dsDataEdit: TDataSource
     DataSet = qryDataEdit
     Left = 72
@@ -647,7 +662,11 @@ object fmEditTeam: TfmEditTeam
     Parameters = <
       item
         Name = 'TOURNAMENT'
-        DataType = ftInteger
+        Attributes = [paNullable]
+        DataType = ftWideString
+        NumericScale = 255
+        Precision = 255
+        Size = 510
         Value = Null
       end>
     SQL.Strings = (
@@ -661,7 +680,7 @@ object fmEditTeam: TfmEditTeam
       'TEAM_TOURNAMENT =:TOURNAMENT'
       ''
       'order by'
-      'TEAM_POINTS')
+      'TEAM_POINTS desc')
     Left = 232
     Top = 208
     object qryKlasiraneTEAMS_ID: TAutoIncField
@@ -697,8 +716,18 @@ object fmEditTeam: TfmEditTeam
       Size = 255
       Lookup = True
     end
+    object qryKlasiraneTEAM_WIN: TIntegerField
+      FieldName = 'TEAM_WIN'
+    end
+    object qryKlasiraneTEAM_LOSE: TIntegerField
+      FieldName = 'TEAM_LOSE'
+    end
+    object qryKlasiraneTEAM_DRAW: TIntegerField
+      FieldName = 'TEAM_DRAW'
+    end
   end
   object qryPlayers: TADOQuery
+    Active = True
     Connection = dMain.fifaCon
     CursorType = ctStatic
     Parameters = <>
@@ -791,8 +820,12 @@ object fmEditTeam: TfmEditTeam
       Size = 255
       Lookup = True
     end
+    object qryGamesIS_PLAYED: TBooleanField
+      FieldName = 'IS_PLAYED'
+    end
   end
   object qryTeams: TADOQuery
+    Active = True
     Connection = dMain.fifaCon
     CursorType = ctStatic
     Parameters = <
@@ -848,5 +881,338 @@ object fmEditTeam: TfmEditTeam
     object qryTeamsFIFA_TEAM: TIntegerField
       FieldName = 'FIFA_TEAM'
     end
+  end
+  object rptKlasirane: TfrxReport
+    Version = '4.11.4'
+    DotMatrixReport = False
+    IniFile = '\Software\Fast Reports'
+    PreviewOptions.Buttons = [pbPrint, pbLoad, pbSave, pbExport, pbZoom, pbFind, pbOutline, pbPageSetup, pbTools, pbEdit, pbNavigator, pbExportQuick]
+    PreviewOptions.Zoom = 1.000000000000000000
+    PrintOptions.Printer = #1055#1086' '#1087#1086#1076#1088#1072#1079#1073#1080#1088#1072#1085#1077
+    PrintOptions.PrintOnSheet = 0
+    ReportOptions.CreateDate = 41991.667005509260000000
+    ReportOptions.LastChange = 41991.667005509260000000
+    ScriptLanguage = 'PascalScript'
+    ScriptText.Strings = (
+      'begin'
+      ''
+      'end.')
+    Left = 184
+    Top = 120
+    Datasets = <
+      item
+        DataSet = Klasirane
+        DataSetName = 'Klasirane'
+      end>
+    Variables = <>
+    Style = <>
+    object Data: TfrxDataPage
+      Height = 1000.000000000000000000
+      Width = 1000.000000000000000000
+    end
+    object Page1: TfrxReportPage
+      PaperWidth = 210.000000000000000000
+      PaperHeight = 297.000000000000000000
+      PaperSize = 9
+      LeftMargin = 10.000000000000000000
+      RightMargin = 10.000000000000000000
+      TopMargin = 10.000000000000000000
+      BottomMargin = 10.000000000000000000
+      object ReportTitle1: TfrxReportTitle
+        Height = 75.590600000000000000
+        Top = 18.897650000000000000
+        Width = 718.110700000000000000
+        object Memo1: TfrxMemoView
+          Left = 7.559060000000000000
+          Width = 548.031849999999900000
+          Height = 37.795300000000000000
+          ShowHint = False
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlack
+          Font.Height = -35
+          Font.Name = 'Arial'
+          Font.Style = [fsBold]
+          Memo.UTF8W = (
+            #1050#1083#1072#1089#1080#1088#1072#1085#1077' '#1082#1098#1084' '#1076#1072#1090#1072': [Date]')
+          ParentFont = False
+        end
+        object Memo2: TfrxMemoView
+          Left = 37.795300000000010000
+          Top = 56.692949999999990000
+          Width = 253.228510000000000000
+          Height = 18.897650000000000000
+          ShowHint = False
+          Color = clScrollBar
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlack
+          Font.Height = -16
+          Font.Name = 'Arial'
+          Font.Style = [fsBold]
+          Frame.Typ = [ftLeft, ftRight, ftTop, ftBottom]
+          HAlign = haCenter
+          Memo.UTF8W = (
+            #1054#1090#1073#1086#1088)
+          ParentFont = False
+        end
+        object Memo3: TfrxMemoView
+          Left = 291.023810000000200000
+          Top = 56.692949999999990000
+          Width = 79.370130000000000000
+          Height = 18.897650000000000000
+          ShowHint = False
+          Color = clScrollBar
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlack
+          Font.Height = -16
+          Font.Name = 'Arial'
+          Font.Style = [fsBold]
+          Frame.Typ = [ftLeft, ftRight, ftTop, ftBottom]
+          HAlign = haCenter
+          Memo.UTF8W = (
+            #1052#1072#1095#1086#1074#1077)
+          ParentFont = False
+        end
+        object Memo4: TfrxMemoView
+          Left = 370.393940000000200000
+          Top = 56.692949999999990000
+          Width = 79.370130000000000000
+          Height = 18.897650000000000000
+          ShowHint = False
+          Color = clScrollBar
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlack
+          Font.Height = -16
+          Font.Name = 'Arial'
+          Font.Style = [fsBold]
+          Frame.Typ = [ftLeft, ftRight, ftTop, ftBottom]
+          HAlign = haCenter
+          Memo.UTF8W = (
+            #1055#1086#1073#1077#1076#1080)
+          ParentFont = False
+        end
+        object Memo5: TfrxMemoView
+          Left = 449.764070000000300000
+          Top = 56.692949999999990000
+          Width = 79.370130000000000000
+          Height = 18.897650000000000000
+          ShowHint = False
+          Color = clScrollBar
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlack
+          Font.Height = -16
+          Font.Name = 'Arial'
+          Font.Style = [fsBold]
+          Frame.Typ = [ftLeft, ftRight, ftTop, ftBottom]
+          HAlign = haCenter
+          Memo.UTF8W = (
+            #1056#1072#1074#1085#1080)
+          ParentFont = False
+        end
+        object Memo6: TfrxMemoView
+          Left = 529.134200000000200000
+          Top = 56.692949999999990000
+          Width = 79.370130000000000000
+          Height = 18.897650000000000000
+          ShowHint = False
+          Color = clScrollBar
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlack
+          Font.Height = -16
+          Font.Name = 'Arial'
+          Font.Style = [fsBold]
+          Frame.Typ = [ftLeft, ftRight, ftTop, ftBottom]
+          HAlign = haCenter
+          Memo.UTF8W = (
+            #1047#1072#1075#1091#1073#1080)
+          ParentFont = False
+        end
+        object Memo7: TfrxMemoView
+          Left = 608.504330000000300000
+          Top = 56.692949999999990000
+          Width = 79.370130000000000000
+          Height = 18.897650000000000000
+          ShowHint = False
+          Color = clScrollBar
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlack
+          Font.Height = -16
+          Font.Name = 'Arial'
+          Font.Style = [fsBold]
+          Frame.Typ = [ftLeft, ftRight, ftTop, ftBottom]
+          HAlign = haCenter
+          Memo.UTF8W = (
+            #1058#1086#1095#1082#1080)
+          ParentFont = False
+        end
+        object Memo15: TfrxMemoView
+          Left = 3.779530000000000000
+          Top = 56.692949999999990000
+          Width = 34.015770000000010000
+          Height = 18.897650000000000000
+          ShowHint = False
+          Color = clMenuText
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlack
+          Font.Height = -16
+          Font.Name = 'Arial'
+          Font.Style = [fsBold]
+          Frame.Typ = [ftLeft, ftRight, ftTop, ftBottom]
+          HAlign = haRight
+          ParentFont = False
+        end
+      end
+      object MasterData1: TfrxMasterData
+        Height = 18.897650000000000000
+        Top = 154.960730000000000000
+        Width = 718.110700000000000000
+        DataSet = Klasirane
+        DataSetName = 'Klasirane'
+        RowCount = 0
+        object Memo8: TfrxMemoView
+          Left = 37.795300000000000000
+          Width = 253.228510000000000000
+          Height = 18.897650000000000000
+          ShowHint = False
+          Color = clWindow
+          DataField = 'TEAM_NAME'
+          DataSet = Klasirane
+          DataSetName = 'Klasirane'
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlack
+          Font.Height = -16
+          Font.Name = 'Arial'
+          Font.Style = [fsBold]
+          Frame.Typ = [ftLeft, ftRight, ftTop, ftBottom]
+          Memo.UTF8W = (
+            '[Klasirane."TEAM_NAME"]')
+          ParentFont = False
+        end
+        object Memo9: TfrxMemoView
+          Left = 291.023810000000000000
+          Width = 79.370130000000000000
+          Height = 18.897650000000000000
+          ShowHint = False
+          Color = clWindow
+          DataField = 'TEAM_MACHES'
+          DataSet = Klasirane
+          DataSetName = 'Klasirane'
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlack
+          Font.Height = -16
+          Font.Name = 'Arial'
+          Font.Style = [fsBold]
+          Frame.Typ = [ftLeft, ftRight, ftTop, ftBottom]
+          HAlign = haRight
+          Memo.UTF8W = (
+            '[Klasirane."TEAM_MACHES"]')
+          ParentFont = False
+        end
+        object Memo10: TfrxMemoView
+          Left = 370.393940000000000000
+          Width = 79.370130000000000000
+          Height = 18.897650000000000000
+          ShowHint = False
+          Color = clWindow
+          DataField = 'TEAM_WIN'
+          DataSet = Klasirane
+          DataSetName = 'Klasirane'
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlack
+          Font.Height = -16
+          Font.Name = 'Arial'
+          Font.Style = []
+          Frame.Typ = [ftLeft, ftRight, ftTop, ftBottom]
+          HAlign = haRight
+          Memo.UTF8W = (
+            '[Klasirane."TEAM_WIN"]')
+          ParentFont = False
+        end
+        object Memo11: TfrxMemoView
+          Left = 449.764070000000000000
+          Width = 79.370130000000000000
+          Height = 18.897650000000000000
+          ShowHint = False
+          Color = clWindow
+          DataField = 'TEAM_DRAW'
+          DataSet = Klasirane
+          DataSetName = 'Klasirane'
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlack
+          Font.Height = -16
+          Font.Name = 'Arial'
+          Font.Style = []
+          Frame.Typ = [ftLeft, ftRight, ftTop, ftBottom]
+          HAlign = haRight
+          Memo.UTF8W = (
+            '[Klasirane."TEAM_DRAW"]')
+          ParentFont = False
+        end
+        object Memo12: TfrxMemoView
+          Left = 529.134199999999900000
+          Width = 79.370130000000000000
+          Height = 18.897650000000000000
+          ShowHint = False
+          Color = clWindow
+          DataField = 'TEAM_LOSE'
+          DataSet = Klasirane
+          DataSetName = 'Klasirane'
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlack
+          Font.Height = -16
+          Font.Name = 'Arial'
+          Font.Style = []
+          Frame.Typ = [ftLeft, ftRight, ftTop, ftBottom]
+          HAlign = haRight
+          Memo.UTF8W = (
+            '[Klasirane."TEAM_LOSE"]')
+          ParentFont = False
+        end
+        object Memo13: TfrxMemoView
+          Left = 608.504330000000000000
+          Width = 79.370130000000000000
+          Height = 18.897650000000000000
+          ShowHint = False
+          Color = clWindow
+          DataField = 'TEAM_POINTS'
+          DataSet = Klasirane
+          DataSetName = 'Klasirane'
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlack
+          Font.Height = -16
+          Font.Name = 'Arial'
+          Font.Style = [fsBold]
+          Frame.Typ = [ftLeft, ftRight, ftTop, ftBottom]
+          HAlign = haRight
+          Memo.UTF8W = (
+            '[Klasirane."TEAM_POINTS"]')
+          ParentFont = False
+        end
+        object Memo14: TfrxMemoView
+          Left = 3.779530000000000000
+          Width = 34.015770000000010000
+          Height = 18.897650000000000000
+          ShowHint = False
+          Color = clWindow
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlack
+          Font.Height = -16
+          Font.Name = 'Arial'
+          Font.Style = [fsBold]
+          Frame.Typ = [ftLeft, ftRight, ftTop, ftBottom]
+          HAlign = haRight
+          Memo.UTF8W = (
+            '[Line#]')
+          ParentFont = False
+        end
+      end
+    end
+  end
+  object Klasirane: TfrxDBDataset
+    UserName = 'Klasirane'
+    CloseDataSource = False
+    DataSet = qryKlasirane
+    BCDToCurrency = False
+    Left = 224
+    Top = 128
   end
 end

@@ -2,8 +2,8 @@ object fmGamePlay: TfmGamePlay
   Left = 0
   Top = 0
   Caption = 'fmGamePlay'
-  ClientHeight = 78
-  ClientWidth = 441
+  ClientHeight = 93
+  ClientWidth = 438
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -16,21 +16,21 @@ object fmGamePlay: TfmGamePlay
   TextHeight = 13
   object lbl1: TLabel
     Left = 72
-    Top = 5
+    Top = 23
     Width = 44
     Height = 13
     Caption = #1044#1086#1084#1072#1082#1080#1085
   end
   object lbl2: TLabel
     Left = 284
-    Top = 5
+    Top = 23
     Width = 23
     Height = 13
     Caption = #1043#1086#1089#1090
   end
   object lbl3: TLabel
     Left = 237
-    Top = 18
+    Top = 36
     Width = 16
     Height = 20
     Caption = ' : '
@@ -43,22 +43,36 @@ object fmGamePlay: TfmGamePlay
   end
   object lbl4: TLabel
     Left = 8
-    Top = 8
+    Top = 26
     Width = 36
     Height = 13
     Caption = #1052#1072#1095' '#8470
   end
+  object lblISPLAYED: TLabel
+    Left = 8
+    Top = 4
+    Width = 109
+    Height = 19
+    Caption = #1057#1090#1072#1090#1091#1089': '#1085#1103#1084#1072
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clWindowText
+    Font.Height = -16
+    Font.Name = 'Tahoma'
+    Font.Style = [fsBold]
+    ParentFont = False
+  end
   object btn1: TButton
     Left = 342
-    Top = 48
+    Top = 66
     Width = 75
     Height = 25
     Caption = 'OK'
     TabOrder = 0
+    OnClick = btn1Click
   end
   object btn2: TButton
     Left = 245
-    Top = 48
+    Top = 66
     Width = 75
     Height = 25
     Caption = 'Cancel'
@@ -67,25 +81,27 @@ object fmGamePlay: TfmGamePlay
   end
   object dbedtHomeScore: TDBEdit
     Left = 213
-    Top = 21
+    Top = 39
     Width = 26
     Height = 21
     DataField = 'PLAYER_HOME_SCORE'
     DataSource = dsGames
     TabOrder = 2
+    OnChange = dbedtHomeScoreChange
   end
   object dbedtAwayScore: TDBEdit
     Left = 252
-    Top = 21
+    Top = 39
     Width = 26
     Height = 21
     DataField = 'PLAYER_AWAY_SCORE'
     DataSource = dsGames
     TabOrder = 3
+    OnChange = dbedtAwayScoreChange
   end
   object dbedtPLAYER_HOME: TDBEdit
     Left = 72
-    Top = 21
+    Top = 39
     Width = 133
     Height = 21
     DataField = '_HOME_NAME'
@@ -94,7 +110,7 @@ object fmGamePlay: TfmGamePlay
   end
   object dbedtPLAYER_HOME1: TDBEdit
     Left = 284
-    Top = 21
+    Top = 39
     Width = 133
     Height = 21
     DataField = '_AWAY_NAME'
@@ -103,7 +119,7 @@ object fmGamePlay: TfmGamePlay
   end
   object lcbID: TJvDBSearchComboBox
     Left = 8
-    Top = 21
+    Top = 39
     Width = 58
     Height = 21
     DataField = 'ID'
@@ -134,7 +150,7 @@ object fmGamePlay: TfmGamePlay
       'where'
       '  ID = :PK_CODE')
     Left = 96
-    Top = 37
+    Top = 55
     object qryGamesID: TAutoIncField
       FieldName = 'ID'
       ReadOnly = True
@@ -174,11 +190,14 @@ object fmGamePlay: TfmGamePlay
       Size = 255
       Lookup = True
     end
+    object qryGamesIS_PLAYED: TBooleanField
+      FieldName = 'IS_PLAYED'
+    end
   end
   object dsGames: TDataSource
     DataSet = qryGames
     Left = 64
-    Top = 37
+    Top = 55
   end
   object qryID: TADOQuery
     Connection = dMain.fifaCon
@@ -203,7 +222,7 @@ object fmGamePlay: TfmGamePlay
       'where'
       '  (TOURNAMENT = :_GAME_TOURNAMENT)')
     Left = 160
-    Top = 37
+    Top = 55
     object qryIDID: TAutoIncField
       FieldName = 'ID'
       ReadOnly = True
@@ -227,20 +246,43 @@ object fmGamePlay: TfmGamePlay
   object dsID: TDataSource
     DataSet = qryID
     Left = 200
-    Top = 37
+    Top = 55
   end
   object qryTeams: TADOQuery
+    Active = True
     Connection = dMain.fifaCon
     CursorType = ctStatic
-    Parameters = <>
+    Parameters = <
+      item
+        Name = '_TMHOME'
+        Attributes = [paNullable]
+        DataType = ftInteger
+        NumericScale = 255
+        Precision = 255
+        Size = 510
+        Value = Null
+      end
+      item
+        Name = '_TMHOME'
+        Attributes = [paNullable]
+        DataType = ftWideString
+        NumericScale = 255
+        Precision = 255
+        Size = 510
+        Value = Null
+      end>
     SQL.Strings = (
       'select'
       '*'
       ''
       'from '
-      'TEAMS')
+      'TEAMS'
+      ''
+      'where'
+      '  ((:_TMHOME is null) or'
+      ' ( TEAMS_ID <>:_TMHOME)) ')
     Left = 392
-    Top = 29
+    Top = 47
     object qryTeamsTEAMS_ID: TAutoIncField
       FieldName = 'TEAMS_ID'
       ReadOnly = True
@@ -268,6 +310,6 @@ object fmGamePlay: TfmGamePlay
   object dsTeams: TDataSource
     DataSet = qryTeams
     Left = 360
-    Top = 29
+    Top = 47
   end
 end

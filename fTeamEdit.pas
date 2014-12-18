@@ -8,7 +8,7 @@ uses
   JvExControls, JvDBLookup, ComCtrls, ExtCtrls, JvExExtCtrls, JvRadioGroup,
   JvExMask, JvToolEdit, JvDBLookupComboEdit, Grids, DBGrids, JvExDBGrids,
   JvDBGrid, JvExStdCtrls, JvCombobox, JvDBSearchComboBox, JvDBCombobox, JvMemo,
-  dblookup;
+  dblookup, frxClass, frxDBSet;
 
 type
   TfmEditTeam = class(TForm)
@@ -104,6 +104,13 @@ type
     qryGames_NAME_HOME: TStringField;
     qryGames_AWAY_TEAM: TStringField;
     btn4: TBitBtn;
+    qryGamesIS_PLAYED: TBooleanField;
+    qryKlasiraneTEAM_WIN: TIntegerField;
+    qryKlasiraneTEAM_LOSE: TIntegerField;
+    qryKlasiraneTEAM_DRAW: TIntegerField;
+    btn5: TButton;
+    rptKlasirane: TfrxReport;
+    Klasirane: TfrxDBDataset;
     procedure lcbTournamentChange(Sender: TObject);
     procedure pgctb2Change(Sender: TObject);
     procedure FormShow(Sender: TObject);
@@ -116,6 +123,7 @@ type
     procedure rgTeamClick(Sender: TObject);
     procedure btn3Click(Sender: TObject);
     procedure btn4Click(Sender: TObject);
+    procedure btn5Click(Sender: TObject);
   private
     procedure CloseDataSets();
     procedure SetTournamentGenerated(param :Integer);
@@ -222,6 +230,11 @@ begin
     fmGamePlay.ShowModal
   else
   ShowMessage(' Не е избран турнир ! ');
+end;
+
+procedure TfmEditTeam.btn5Click(Sender: TObject);
+begin
+  rptKlasirane.ShowReport(True);
 end;
 
 procedure TfmEditTeam.CloseDataSets;
